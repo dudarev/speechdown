@@ -1,0 +1,18 @@
+# macOS system files
+.DS_Store
+
+# Draw.io
+*.dtmp
+
+# Python
+*.egg-info
+requirements.txt
+
+# pyenv
+.python-version
+
+# VS Code
+.vscode/
+
+# Project specific
+.speechdown/
