@@ -37,9 +37,16 @@ class SpeechDownService:
             for language in self.config_port.get_languages():
                 logger.debug(f"Attempting transcription in {language}")
                 transcription = self.transcriber_port.transcribe(audio_file, language)
-                if (
-                    not best_transcription
-                    or transcription.metrics.confidence > best_transcription.metrics.confidence
+
+                # Fix for mypy error - handle None values explicitly
+                current_confidence = transcription.metrics.confidence
+                best_confidence = (
+                    best_transcription.metrics.confidence if best_transcription else None
+                )
+
+                if best_transcription is None or (
+                    current_confidence is not None
+                    and (best_confidence is None or current_confidence > best_confidence)
                 ):
                     best_transcription = transcription
                     logger.debug(
