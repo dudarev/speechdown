@@ -12,8 +12,10 @@ class WhisperModelAdapter(TranscriptionModelPort):
         """
         Initialize with specified Whisper model.
 
+        See https://github.com/openai/whisper
+
         Args:
-            model_name: Name of Whisper model to load ("tiny", "base", "small", "medium", "large")
+            model_name: Name of Whisper model to load ("tiny", "base", "small", "medium", "large", "turbo")
         """
         self._model_name = model_name
         self._model = whisper.load_model(model_name)

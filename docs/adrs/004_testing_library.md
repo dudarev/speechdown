@@ -24,3 +24,8 @@ We will use pytest as our testing library. We will favor:
 ## Conclusion
 
 pytest, combined with our preferred testing style, will provide a robust and maintainable testing framework for the SpeechDown project.
+
+## Links
+
+- [Arrange-Act-Assert: A Pattern for Writing Good Tests | Automation Panda](https://automationpanda.com/2020/07/07/arrange-act-assert-a-pattern-for-writing-good-tests/)
+- [Unit Testing and the Arrange, Act and Assert (AAA) Pattern | by Paulo Gomes | Medium](https://medium.com/@pjbgf/title-testing-code-ocd-and-the-aaa-pattern-df453975ab80)

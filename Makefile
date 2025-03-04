@@ -1,4 +1,4 @@
-.PHONY: format lint test test-integration mypy ci init run validate requirements-install requirements-update
+.PHONY: format lint test test-integration test-all mypy ci init run validate requirements-install requirements-update
 
 format:
 	ruff format src
@@ -12,7 +12,10 @@ test:
 	pytest tests/unit
 
 test-integration:
-	pytest tests/integration
+	python -m pytest tests/integration -v --run-integration --run-slow
+
+test-all:
+	python -m pytest tests -v --run-integration --run-slow
 
 mypy:
 	mypy src/speechdown
