@@ -1,7 +1,7 @@
 # ADR 002: Unit Test Structure
 
-**Status:** Accepted  
 **Date:** 2025-03-02
+**Status:** Accepted  
 
 ## Context
 
