@@ -4,7 +4,6 @@ This file tracks short-term implementation tasks following [ADR 006](docs/adrs/0
 
 ## Current Tasks
 
-- [ ] Implement caching for transcriptions to avoid redundant processing
 - [ ] Implement gathering metrics for transcriptions
 - [ ] Add configurable model selection
   - [ ] Add model_name field to ConfigAdapter

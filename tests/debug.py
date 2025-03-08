@@ -17,7 +17,7 @@ def main():
     """
     print(f"Running validation on: {TEST_DATA_DIR}")
     configure_logging(debug_mode=True)
-    transcribe(directory=TEST_DATA_DIR, dry_run=DRY_RUN)
+    transcribe(directory=TEST_DATA_DIR, dry_run=DRY_RUN, force=False)
     print("Validation complete")
 
 

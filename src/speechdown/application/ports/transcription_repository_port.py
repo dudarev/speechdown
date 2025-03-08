@@ -1,10 +1,10 @@
 from pathlib import Path
 from typing import Protocol, List
-from speechdown.domain.entities import Transcription
+from speechdown.domain.entities import CachedTranscription, Transcription
 
 
 class TranscriptionRepositoryPort(Protocol):
-    def save_transcription(self, transcription: Transcription | None) -> None:
+    def save_transcription(self, transcription: Transcription | CachedTranscription | None) -> None:
         pass
 
     def get_transcriptions(self, path: Path) -> List[Transcription]:

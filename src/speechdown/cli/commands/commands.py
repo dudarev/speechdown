@@ -6,7 +6,7 @@ from speechdown.infrastructure.adapters.audio_file_adapter import (
     AudioFileAdapter,
 )
 from speechdown.infrastructure.adapters.config_adapter import ConfigAdapter
-from speechdown.infrastructure.adapters.output_adapter import OutputAdapter
+from speechdown.infrastructure.adapters.output_adapter import MarkdownOutputAdapter
 from speechdown.infrastructure.database import initialize_database
 from speechdown.commons.schema import SCHEMA
 from speechdown.application.services.speechdown_service import (
@@ -21,6 +21,10 @@ from speechdown.infrastructure.adapters.whisper_model_adapter import (
 from speechdown.infrastructure.adapters.repository_adapter import (
     SQLiteRepositoryAdapter,
 )
+from speechdown.infrastructure.adapters.file_system_transcription_cache import (
+    FileSystemTranscriptionCache,
+)
+from speechdown.cli.commands.clear_cache import add_clear_cache_parser
 
 
 def configure_logging(debug_mode):
@@ -68,13 +72,14 @@ def init(directory):
     config_adapter.set_default_languages_if_not_set()
 
 
-def transcribe(directory: Path, dry_run: bool):
+def transcribe(directory: Path, dry_run: bool, force: bool):
     speechdown_paths = SpeechDownPaths.from_working_directory(directory)
 
     audio_file_adapter = AudioFileAdapter()
     config_adapter = ConfigAdapter.load_config_from_path(speechdown_paths.config)
-    output_adapter = OutputAdapter()
+    output_adapter = MarkdownOutputAdapter()
     repository_adapter = SQLiteRepositoryAdapter(speechdown_paths.db)
+    cache_adapter = FileSystemTranscriptionCache()
 
     # Create model and transcriber
     whisper_model = WhisperModelAdapter()
@@ -86,10 +91,11 @@ def transcribe(directory: Path, dry_run: bool):
         output_port=output_adapter,
         repository_port=repository_adapter,
         transcriber_port=transcriber_adapter,
+        cache_port=cache_adapter,
     )
 
     audio_files = speechdown_service.collect_audio_files(directory)
-    transcriptions = speechdown_service.transcribe_audio_files(audio_files)
+    transcriptions = speechdown_service.transcribe_audio_files(audio_files, force=force)
     # get existing output
     # update transcriptions based on existing output
     # update the output
@@ -100,9 +106,6 @@ def transcribe(directory: Path, dry_run: bool):
     else:
         for transcription in transcriptions:
             repository_adapter.save_transcription(transcription)
-            print(
-                f"Saved transcription: {transcription.text} (Language: {transcription.language.code})"
-            )
 
 
 def add_debug_argument(parser):
@@ -132,6 +135,11 @@ def add_transcribe_arguments(parser):
         action="store_true",
         help="Simulate the transcription process without making any changes",
     )
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Force new transcriptions even if cached versions exist",
+    )
 
 
 def cli():
@@ -143,8 +151,10 @@ def cli():
     add_common_arguments(parser_init)
 
     parser_transcribe = subparsers.add_parser("transcribe", help="Transcribe audio files")
-
     add_transcribe_arguments(parser_transcribe)
+
+    # Add clear-cache command
+    add_clear_cache_parser(subparsers)
 
     args = parser.parse_args()
 
@@ -157,7 +167,9 @@ def cli():
         if args.debug:
             logging.debug("Debug mode enabled")
             print("Debug mode enabled")
-        transcribe(Path(args.directory), args.dry_run)
+        transcribe(Path(args.directory), args.dry_run, args.force)
+    elif args.command == "clear-cache":
+        return args.func(args)
     else:
         parser.print_help()
 

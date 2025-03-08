@@ -8,6 +8,9 @@ lint:
 	ruff check src
 	ruff check tests
 
+mypy:
+	mypy src/speechdown
+
 test:
 	pytest tests/unit
 
@@ -17,10 +20,9 @@ test-integration:
 test-all:
 	python -m pytest tests -v --run-integration --run-slow
 
-mypy:
-	mypy src/speechdown
-
 ci: lint mypy test
+
+ci-full: lint mypy test-all
 
 init:
 	sd init -d tests/data
@@ -28,9 +30,9 @@ init:
 run:
 	sd transcribe -d tests/data --dry-run --debug
 
-# also see tests/validate.py
-validate:
-	sd transcribe -d tests/data
+# also see tests/debug.py for debugging from VSCode
+debug:
+	sd transcribe -d tests/data --debug
 
 requirements-install:
 	pip install uv
