@@ -1,4 +1,4 @@
-from speechdown.cli.commands import init
+from speechdown.presentation.cli.commands import init
 
 
 def test_init_command_creates_database(tmp_path):

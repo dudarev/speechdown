@@ -16,3 +16,6 @@ requirements.txt
 
 # Project specific
 .speechdown/
+
+# legacy
+legacy

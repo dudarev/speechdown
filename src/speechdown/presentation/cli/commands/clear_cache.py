@@ -1,10 +1,11 @@
 import argparse
 import logging
+import os
 from typing import List
 from pathlib import Path
 
-from speechdown.infrastructure.adapters.file_system_transcription_cache import (
-    FileSystemTranscriptionCache,
+from speechdown.infrastructure.adapters.file_system_transcription_cache_adapter import (
+    FileSystemTranscriptionCacheAdapter,
 )
 
 logger = logging.getLogger(__name__)
@@ -16,6 +17,13 @@ def add_clear_cache_parser(subparsers):
         "clear-cache",
         help="Clear the transcription cache",
         description="Remove cached transcriptions to free up space or force regeneration.",
+    )
+    parser.add_argument(
+        "-d",
+        "--directory",
+        type=str,
+        default=None,
+        help="Directory containing the .speechdown/cache folder to clear",
     )
     parser.add_argument(
         "--all",
@@ -46,7 +54,13 @@ def clear_cache_command(args: argparse.Namespace) -> int:
     Returns:
         Exit code (0 for success)
     """
-    cache = FileSystemTranscriptionCache()
+    # Determine cache directory path
+    cache_dir = _resolve_cache_directory(args.directory)
+    if not cache_dir:
+        print("Error: Cannot find or create .speechdown/cache directory")
+        return 1
+
+    cache = FileSystemTranscriptionCacheAdapter(base_dir=cache_dir)
 
     # Validate arguments
     if not args.all and args.older_than is None:
@@ -85,8 +99,38 @@ def clear_cache_command(args: argparse.Namespace) -> int:
         return 1
 
 
+def _resolve_cache_directory(directory: str | None) -> Path | None:
+    """
+    Resolve the cache directory path based on the provided directory.
+
+    Args:
+        directory: User-specified directory containing .speechdown/cache
+                  If None, uses current directory
+
+    Returns:
+        Path to the cache directory or None if it doesn't exist and can't be created
+    """
+    if directory is None:
+        base_path = Path.cwd()
+    else:
+        base_path = Path(directory)
+
+    if not base_path.exists() or not base_path.is_dir():
+        logger.error(f"Directory not found: {base_path}")
+        return None
+
+    cache_dir = base_path / ".speechdown" / "cache"
+    try:
+        os.makedirs(cache_dir, exist_ok=True)
+        logger.debug(f"Using cache directory: {cache_dir}")
+        return cache_dir
+    except Exception as e:
+        logger.error(f"Failed to create cache directory: {cache_dir}, error: {e}")
+        return None
+
+
 def _get_files_to_delete(
-    cache: FileSystemTranscriptionCache, older_than_days: int | None = None
+    cache: FileSystemTranscriptionCacheAdapter, older_than_days: int | None = None
 ) -> List[Path]:
     """
     Get list of cache files that would be deleted based on criteria.

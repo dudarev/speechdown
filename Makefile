@@ -1,4 +1,18 @@
-.PHONY: format lint test test-integration test-all mypy ci init run validate requirements-install requirements-update
+.PHONY: format lint test test-integration test-all mypy ci init run validate requirements-install requirements-update list-sql
+
+
+# Requirements
+
+requirements-install:
+	pip install uv
+	uv pip install -e '.[testing]'
+
+requirements-update:
+	uv pip freeze > requirements.txt
+	@echo "Dependencies updated in requirements.txt"
+
+
+# CI
 
 format:
 	ruff format src
@@ -24,6 +38,9 @@ ci: lint mypy test
 
 ci-full: lint mypy test-all
 
+
+# Development
+
 init:
 	sd init -d tests/data
 
@@ -34,10 +51,11 @@ run:
 debug:
 	sd transcribe -d tests/data --debug
 
-requirements-install:
-	pip install uv
-	uv pip install -e '.[testing]'
+debug-force:
+	sd transcribe -d tests/data --force --debug
 
-requirements-update:
-	uv pip freeze > requirements.txt
-	@echo "Dependencies updated in requirements.txt"
+clear-cache:
+	sd clear-cache -d tests/data --all
+
+list-sql:
+	sqlite3 -header -column tests/data/.speechdown/speechdown.db < src/speechdown/infrastructure/sql/list_transcriptions.sql

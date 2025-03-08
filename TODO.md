@@ -4,6 +4,10 @@ This file tracks short-term implementation tasks following [ADR 006](docs/adrs/0
 
 ## Current Tasks
 
+- [ ] Implement date range filtering for transcriptions
+  - [ ] pass date range in CLI
+  - [ ] filter files based on date
+  - [ ] output transcriptions based on date range
 - [ ] Implement gathering metrics for transcriptions
 - [ ] Add configurable model selection
   - [ ] Add model_name field to ConfigAdapter
