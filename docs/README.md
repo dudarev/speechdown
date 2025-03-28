@@ -14,7 +14,13 @@ SpeechDown is a command line tool designed to help you easily transcribe audio f
 
 ## Installation
 
-Currently SpeechDown is not available as a package yet.
+Currently SpeechDown is not available as a package yet. You can install it locally for development using:
+
+```bash
+make requirements-install
+```
+
+This will install the required dependencies including development tools.
 
 ## Usage
 
@@ -47,6 +53,10 @@ This will transcribe all supported audio files found in the specified directory 
 ## Development
 
 See `Makefile` for development commands.
+
+### Task Tracking
+
+For information on how tasks and features are tracked and prioritized, see [ADR-006](adrs/006_task_tracking_approach.md).
 
 ### Continuous Integration
 
