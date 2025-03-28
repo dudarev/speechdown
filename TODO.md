@@ -4,6 +4,12 @@ This file tracks short-term implementation tasks following [ADR 006](docs/adrs/0
 
 ## Current Tasks
 
+- [ ] [ADR 009](docs/adrs/009_consolidating_transcription_storage.md): Consolidate transcription storage - tell Copilot to implement this
+  - [ ] Deprecate `TranscriptionCachePort` interface
+  - [ ] Remove `FileSystemTranscriptionCacheAdapter` implementation
+  - [ ] Update service classes to use repository instead of cache
+  - [ ] Update CLI command structure
+  - [ ] Remove deprecated cache components
 - [ ] Implement date range filtering for transcriptions
   - [ ] pass date range in CLI
   - [ ] filter files based on date
@@ -21,5 +27,5 @@ This file tracks short-term implementation tasks following [ADR 006](docs/adrs/0
 
 ## Notes
 
-* Tasks from this file may be promoted to GitHub issues when ready for implementation if they require more detailed tracking or collaboration
-* See `docs/planning/` for strategic roadmaps and vision
+- Tasks from this file may be promoted to GitHub issues when ready for implementation if they require more detailed tracking or collaboration
+- See `docs/planning/` for strategic roadmaps and vision
