@@ -54,8 +54,14 @@ debug:
 debug-force:
 	sd transcribe -d tests/data --force --debug
 
+# TODO(AD): Remove or update this command when the caching approach is changed
 clear-cache:
 	sd clear-cache -d tests/data --all
 
+# SQL
+
 list-sql:
-	sqlite3 -header -column tests/data/.speechdown/speechdown.db < src/speechdown/infrastructure/sql/list_transcriptions.sql
+	sqlite3 -header -column tests/data/.speechdown/speechdown.db < sql/list_transcriptions.sql
+
+list-tables:
+	sqlite3 -header -column tests/data/.speechdown/speechdown.db < sql/list_tables.sql

@@ -1,3 +1,4 @@
+-- List transcriptions in the test database
 SELECT 
     path as "Path",
     language_code as "Language",
