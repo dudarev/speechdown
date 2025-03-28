@@ -7,6 +7,7 @@
 # Python
 *.egg-info
 requirements.txt
+.coverage
 
 # pyenv
 .python-version

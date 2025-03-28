@@ -1,4 +1,4 @@
-.PHONY: format lint test test-integration test-all mypy ci init run validate requirements-install requirements-update list-sql
+.PHONY: format lint test test-integration test-all mypy ci init run validate requirements-install requirements-update list-sql coverage-view
 
 
 # Requirements
@@ -8,8 +8,8 @@ requirements-install:
 	uv pip install -e '.[testing]'
 
 requirements-update:
-	uv pip freeze > requirements.txt
-	@echo "Dependencies updated in requirements.txt"
+	uv pip install -U -e '.[testing]'
+	@echo "Dependencies updated to latest versions"
 
 
 # CI
@@ -26,7 +26,7 @@ mypy:
 	mypy src/speechdown
 
 test:
-	pytest tests/unit
+	pytest tests/unit --cov=src/speechdown --cov-report term --cov-report html:coverage_html
 
 test-integration:
 	python -m pytest tests/integration -v --run-integration --run-slow
@@ -65,3 +65,8 @@ list-sql:
 
 list-tables:
 	sqlite3 -header -column tests/data/.speechdown/speechdown.db < sql/list_tables.sql
+
+# Coverage
+
+coverage-view:
+	open coverage_html/index.html

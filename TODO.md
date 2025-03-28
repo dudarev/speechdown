@@ -10,6 +10,7 @@ This file tracks short-term implementation tasks following [ADR 006](docs/adrs/0
   - [ ] Update service classes to use repository instead of cache
   - [ ] Update CLI command structure
   - [ ] Remove deprecated cache components
+- [ ] Unit tests for `transcription_service.py`
 - [ ] Implement date range filtering for transcriptions
   - [ ] pass date range in CLI
   - [ ] filter files based on date
