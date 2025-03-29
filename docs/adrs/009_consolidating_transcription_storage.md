@@ -2,7 +2,7 @@
 
 **Date:** 2025-03-18
 **Status:** Accepted
-**Supersedes:** [ADR 007](007_transcription_caching_architecture.md)
+**Supersedes:** [ADR 007](archive/007_transcription_caching_architecture.md)
 
 ## Context
 

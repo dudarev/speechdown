@@ -1,7 +1,8 @@
 # ADR 007: Transcription Caching Architecture
 
 **Date:** 2025-03-08
-**Status:** Proposed
+**Status:** Deprecated
+**Superseded by:** [ADR 009](../009_consolidating_transcription_storage.md)
 
 ## Context
 
@@ -12,17 +13,21 @@ SpeechDown currently processes audio files and creates transcriptions without ca
 We will implement a minimalist transcription caching system with the following characteristics:
 
 ### Cache Location:
+
 - Store cache in `.speechdown/cache/` directory
 
 ### Cache Content:
+
 - Store only the transcription text in plain text files
 - Only store the best transcription obtained for each audio file
 
 ### Cache Identification:
+
 - Use content-based hash of audio file (SHA-256) as the identifier
 - No need to track model, provider, or version information in initial implementation
 
 ### File Naming:
+
 - Use the audio file's SHA-256 hash as filename with a .txt extension:
   - `<file_hash>.txt`
 
@@ -36,23 +41,26 @@ class CachedTranscription:
 ```
 
 ### Port Definition:
+
 - Simple cache interface that only deals with file hashes:
+
 ```python
 class TranscriptionCachePort(Protocol):
     def get_cached_transcription(
-        self, 
+        self,
         audio_file: AudioFile
     ) -> CachedTranscription | None:
         ...
-    
+
     def cache_transcription(
-        self, 
+        self,
         transcription: Transcription
     ) -> None:
         ...
 ```
 
 ### Directory Structure:
+
 ```
 .speechdown/
 ├── cache/
@@ -64,25 +72,29 @@ class TranscriptionCachePort(Protocol):
 ### CLI Cache Management:
 
 #### Clear Cache Command:
+
 ```
 speechdown clear-cache [options]
 ```
 
 Options:
+
 - `--all`: Remove all cached transcriptions
 - `--older-than <days>`: Remove transcriptions older than specified days
 - `--dry-run`: Show what would be deleted without actually deleting
 
 #### Force Retranscription:
+
 ```
-speechdown transcribe [file] --force
+speechdown transcribe [file] --ignore-existing
 ```
 
-The `--force` flag will bypass cache and perform a new transcription.
+The `--ignore-existing` flag will bypass cache and perform a new transcription.
 
 ## Consequences
 
 ### Positive
+
 - Maximum simplicity: Just file hash → transcription mapping
 - Zero configuration: No parameters to track or manage
 - Minimal storage: Only one transcription per file
@@ -90,6 +102,7 @@ The `--force` flag will bypass cache and perform a new transcription.
 - Faster lookups: Only need to hash the audio file
 
 ### Negative
+
 - No model tracking: Can't select specific model results
 - No version history: New transcriptions overwrite old ones
 - No quality metrics: Can't automatically select "best" transcription

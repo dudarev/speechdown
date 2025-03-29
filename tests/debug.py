@@ -9,7 +9,7 @@ from speechdown.presentation.cli.commands import transcribe, configure_logging
 # Constants
 TEST_DATA_DIR = Path(__file__).parent / "data"
 DRY_RUN = False  # Set to True to avoid writing to DB
-FORCE = False  # Set to True to force re-transcription
+IGNORE_EXISTING = False  # Set to True to ignore existing transcriptions
 
 
 def main():
@@ -18,7 +18,7 @@ def main():
     """
     print(f"Running validation on: {TEST_DATA_DIR}")
     configure_logging(debug_mode=True)
-    transcribe(directory=TEST_DATA_DIR, dry_run=DRY_RUN, force=FORCE)
+    transcribe(directory=TEST_DATA_DIR, dry_run=DRY_RUN, ignore_existing=IGNORE_EXISTING)
     print("Validation complete")
 
 

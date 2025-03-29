@@ -44,19 +44,12 @@ ci-full: lint mypy test-all
 init:
 	sd init -d tests/data
 
-run:
-	sd transcribe -d tests/data --dry-run --debug
-
 # also see tests/debug.py for debugging from VSCode
 debug:
 	sd transcribe -d tests/data --debug
 
-debug-force:
-	sd transcribe -d tests/data --force --debug
-
-# TODO(AD): Remove or update this command when the caching approach is changed
-clear-cache:
-	sd clear-cache -d tests/data --all
+debug-ignore-existing:
+	sd transcribe -d tests/data --ignore-existing --debug
 
 # SQL
 

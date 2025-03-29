@@ -23,10 +23,6 @@ from speechdown.infrastructure.adapters.whisper_model_adapter import (
 from speechdown.infrastructure.adapters.repository_adapter import (
     SQLiteRepositoryAdapter,
 )
-from speechdown.infrastructure.adapters.file_system_transcription_cache_adapter import (
-    FileSystemTranscriptionCacheAdapter,
-)
-from speechdown.presentation.cli.commands.clear_cache import add_clear_cache_parser
 
 
 def configure_logging(debug_mode: bool) -> None:
@@ -73,7 +69,7 @@ def init(directory: Path) -> int:
         if not speechdown_paths.speechdown_directory.exists():
             speechdown_paths.speechdown_directory.mkdir(parents=True)
 
-        # Create cache directory if it doesn't exist
+        # Cache directory is no longer needed but kept for backward compatibility
         if not speechdown_paths.cache_dir.exists():
             speechdown_paths.cache_dir.mkdir(parents=True)
 
@@ -92,14 +88,14 @@ def init(directory: Path) -> int:
         return 1
 
 
-def transcribe(directory: Path, dry_run: bool, force: bool) -> int:
+def transcribe(directory: Path, dry_run: bool, ignore_existing: bool) -> int:
     """
     Transcribe audio files in the specified directory.
 
     Args:
         directory: The directory containing audio files
         dry_run: Whether to perform a dry run without saving to database
-        force: Whether to force transcription even if cached
+        ignore_existing: Whether to ignore existing transcriptions and perform new ones
 
     Returns:
         Exit code (0 for success)
@@ -112,12 +108,6 @@ def transcribe(directory: Path, dry_run: bool, force: bool) -> int:
         output_adapter = MarkdownOutputAdapter()
         repository_adapter = SQLiteRepositoryAdapter(speechdown_paths.db)
 
-        # Ensure cache directory exists
-        if not speechdown_paths.cache_dir.exists():
-            speechdown_paths.cache_dir.mkdir(parents=True)
-
-        cache_adapter = FileSystemTranscriptionCacheAdapter(base_dir=speechdown_paths.cache_dir)
-
         # Create model and transcriber
         whisper_model = WhisperModelAdapter()
         transcriber_adapter = WhisperTranscriberAdapter(whisper_model)
@@ -128,11 +118,12 @@ def transcribe(directory: Path, dry_run: bool, force: bool) -> int:
             output_port=output_adapter,
             repository_port=repository_adapter,
             transcriber_port=transcriber_adapter,
-            cache_port=cache_adapter,
         )
 
         audio_files = transcription_service.collect_audio_files(directory)
-        transcriptions = transcription_service.transcribe_audio_files(audio_files, force=force)
+        transcriptions = transcription_service.transcribe_audio_files(
+            audio_files, ignore_existing=ignore_existing
+        )
         # get existing output
         # update transcriptions based on existing output
         # update the output
@@ -180,9 +171,9 @@ def add_transcribe_arguments(parser) -> None:
         help="Simulate the transcription process without making any changes",
     )
     parser.add_argument(
-        "--force",
+        "--ignore-existing",
         action="store_true",
-        help="Force new transcriptions even if cached versions exist",
+        help="Ignore existing transcriptions and perform new ones",
     )
 
 
@@ -203,9 +194,6 @@ def cli() -> int:
     parser_transcribe = subparsers.add_parser("transcribe", help="Transcribe audio files")
     add_transcribe_arguments(parser_transcribe)
 
-    # Add clear-cache command
-    add_clear_cache_parser(subparsers)
-
     args = parser.parse_args()
 
     # Configure logging based on the debug flag
@@ -216,9 +204,7 @@ def cli() -> int:
     elif args.command == "transcribe":
         if args.debug:
             logging.debug("Debug mode enabled")
-        return transcribe(Path(args.directory), args.dry_run, args.force)
-    elif args.command == "clear-cache":
-        return args.func(args)
+        return transcribe(Path(args.directory), args.dry_run, args.ignore_existing)
     else:
         parser.print_help()
         return 0

@@ -6,7 +6,7 @@ This document outlines the mid-term development plan for SpeechDown, detailing f
 
 - Implement transcription caching system
   - Store processed audio hashes to avoid redundant transcription
-  - Allow force refresh option in CLI
+  - Allow ignore-existing option in CLI
 - Add configurable Whisper model selection
   - Support multiple model sizes (tiny, base, small, medium, large)
   - Allow language-specific model configuration

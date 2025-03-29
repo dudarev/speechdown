@@ -8,7 +8,6 @@ from speechdown.application.ports.output_port import OutputPort
 from speechdown.domain.entities import AudioFile, TranscriptionResult
 from speechdown.application.ports.transcriber_port import TranscriberPort
 from speechdown.application.ports.transcription_repository_port import TranscriptionRepositoryPort
-from speechdown.application.ports.transcription_cache_port import TranscriptionCachePort
 from speechdown.application.ports.config_port import ConfigPort
 
 logger = logging.getLogger(__name__)
@@ -21,7 +20,6 @@ class TranscriptionService:
     output_port: OutputPort
     repository_port: TranscriptionRepositoryPort
     transcriber_port: TranscriberPort
-    cache_port: TranscriptionCachePort
 
     def collect_audio_files(self, directory: Path) -> List[AudioFile]:
         logger.debug(f"Collecting audio files from directory: {directory}")
@@ -30,20 +28,21 @@ class TranscriptionService:
         return audio_files
 
     def transcribe_audio_files(
-        self, audio_files: List[AudioFile], force: bool = False
+        self, audio_files: List[AudioFile], ignore_existing: bool = False
     ) -> List[TranscriptionResult]:
         transcriptions: list[TranscriptionResult] = []
         for i, audio_file in enumerate(audio_files, 1):
             logger.debug(f"Transcribing file {i}/{len(audio_files)}: {audio_file.path}")
 
-            if not force:
-                # Try to get from cache first
-                cached = self.cache_port.get_cached_transcription(audio_file)
-                if cached:
-                    transcriptions.append(cached)
+            if not ignore_existing:
+                # Try to get existing transcription first
+                existing = self.repository_port.get_best_transcription(audio_file.path)
+                if existing:
+                    transcriptions.append(existing)
+                    logger.debug(f"Using existing transcription for {audio_file.path}")
                     continue
 
-            # If not in cache or force=True, perform transcription
+            # If no existing transcription or ignore_existing=True, perform transcription
             best_transcription = None
             for language in self.config_port.get_languages():
                 logger.debug(f"Attempting transcription in {language}")
@@ -66,7 +65,6 @@ class TranscriptionService:
                     )
 
             if best_transcription is not None:
-                self.cache_port.cache_transcription(best_transcription)
                 transcriptions.append(best_transcription)
 
         logger.debug(f"Transcription complete for all {len(audio_files)} files")
