@@ -12,13 +12,15 @@ As the SpeechDown project evolves, there's a need to track tasks, features, and 
 We will implement a multi-layered task tracking system:
 
 1. Short-term TODOs:
+
    - Create a `TODO.md` file in the project root for immediate implementation tasks
    - Use checkbox format (`- [ ]`) for trackable completion status
 
 2. Mid/Long-term planning:
-   - Create a `docs/planning/` directory with:
-     - `roadmap.md` for mid-term feature roadmaps and milestones
-     - `vision.md` for long-term development goals and architectural direction
+
+   - Create a [planning](../../docs/planning/) directory with:
+     - [roadmap.md](../../docs/planning/roadmap.md) for mid-term feature roadmaps and milestones
+     - [vision.md](../../docs/planning/vision.md) for long-term development goals and architectural direction
 
 3. Task promotion process:
    - Tasks start in `TODO.md`
