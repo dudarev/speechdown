@@ -19,9 +19,9 @@ class TranscriptionModelPort(Protocol):
 
         Returns:
             A dictionary containing transcription results.
-            In case of Whisper it includes:
+            For example, in case of Whisper it includes:
             - text: The transcribed text
             - language: Detected language code
-            - segments: List of segments with timing and confidence info
+            - segments: List of segments with timing, confidence info, etc.
         """
         ...

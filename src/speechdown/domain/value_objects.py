@@ -182,11 +182,16 @@ class TranscriptionMetrics:
     }
     """
 
-    # TODO(AD): implement these two
+    # TODO(AD): implement model_name and time_seconds, rename time_seconds to transcription_time_seconds
     model_name: Optional[str] = None
     time_seconds: Optional[float] = None
 
     # Common metrics with explicit fields
+
+    # The confidence score is a single value that allows comparison between different transcriptions.
+    # It's derived from the model's internal metrics (typically avg_logprob values) and represents
+    # the overall reliability of the transcription. Higher values (closer to 0) indicate higher confidence.
+    # This is the primary metric used when selecting the "best" transcription among alternatives.
     confidence: Optional[float] = None
     audio_duration_seconds: Optional[float] = None
     word_count: Optional[int] = None

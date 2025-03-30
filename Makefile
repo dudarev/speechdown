@@ -41,6 +41,9 @@ ci-full: lint mypy test-all
 
 # Development
 
+reset:
+	rm -rf tests/data/.speechdown
+
 init:
 	sd init -d tests/data
 

@@ -14,7 +14,8 @@ This file tracks short-term implementation tasks following [ADR 006](docs/adrs/0
   - [x] Make sure tests are passing `make ci-full`
   - [x] Validate with `make debug`
   - [x] Remove `make run` command
-  - [ ] Deprecate ADR 007, put it to archive subfolder
+  - [x] Deprecate ADR 007, put it to archive subfolder
+- [ ] Implement transcription_time_seconds and model_name
 - [ ] Unit tests for `transcription_service.py`
 - [ ] Implement date range filtering for transcriptions
   - [ ] pass date range in CLI
