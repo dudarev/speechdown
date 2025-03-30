@@ -2,11 +2,23 @@
 
 This document outlines the mid-term development plan for SpeechDown, detailing features and improvements planned for the next 3-6 months.
 
+## Replace voice-cli
+
+The nearest term goal is to replace the existing `voice-cli` usage with SpeechDown's CLI.
+`voice-cli` is our current tool for voice transcription that has limited functionality.
+The replacement will provide immediate benefits to users with minimal disruption to existing workflows.
+
+Key differences from the user standpoint in the beginning will be:
+
+- Support of multiple languages (not just English)
+- Specifying of output directory in settings during init
+- Handling date ranges automatically
+- Transcribing today and yesterday's files by default
+
 ## Transcription Enhancements
 
-- Implement transcription caching system
-  - Store processed audio hashes to avoid redundant transcription
-  - Allow ignore-existing option in CLI
+TODO(AD): Review what's below
+
 - Add configurable Whisper model selection
   - Support multiple model sizes (tiny, base, small, medium, large)
   - Allow language-specific model configuration
