@@ -11,6 +11,12 @@ SELECT
     ROUND(confidence, 2) as "Confidence",
     ROUND(audio_duration_seconds, 1) as "Duration(s)",
     word_count as "Words",
+    ROUND(transcription_time_seconds, 1) as "Transcription Time(s)",
+    CASE 
+        WHEN transcription_time_seconds > 0 
+        THEN ROUND((word_count / transcription_time_seconds) * 60, 1) 
+        ELSE 0 
+    END as "Words per Minute",
     datetime(created_at) as "Created"
 FROM transcriptions 
 ORDER BY created_at DESC;

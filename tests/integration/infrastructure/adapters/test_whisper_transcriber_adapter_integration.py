@@ -51,7 +51,7 @@ def test_transcribe_integration(whisper_adapter, test_audio_file):
     assert transcription.metrics.audio_duration_seconds > 0
     assert transcription.metrics.word_count > 0
     assert transcription.metrics.words_per_second is not None
-    assert transcription.metrics.additional_metrics["model_name"] == "whisper-tiny"
+    assert transcription.metrics.model_name == "whisper-tiny"
 
 
 @pytest.mark.integration
@@ -70,4 +70,4 @@ def test_auto_transcribe_integration(whisper_adapter, test_audio_file):
     assert transcription.metrics.confidence is not None
     assert transcription.metrics.word_count > 0
     assert transcription.metrics.audio_duration_seconds > 0
-    assert transcription.metrics.additional_metrics["model_name"] == "whisper-tiny"
+    assert transcription.metrics.model_name == "whisper-tiny"

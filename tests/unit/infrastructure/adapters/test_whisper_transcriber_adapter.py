@@ -84,7 +84,7 @@ def test_extract_metrics_from_result(mock_transcription_model, sample_transcript
     assert metrics.words_per_second == 5 / 10.5
     assert metrics.additional_metrics["segments_count"] == 2
     assert metrics.additional_metrics["temperature"] == 0.0
-    assert metrics.additional_metrics["model_name"] == "mock-model"
+    assert metrics.model_name == "mock-model"
 
 
 def test_transcribe(mock_transcription_model, sample_audio_file, sample_transcription_result):

@@ -182,9 +182,9 @@ class TranscriptionMetrics:
     }
     """
 
-    # TODO(AD): implement model_name and time_seconds, rename time_seconds to transcription_time_seconds
+    # Information about the transcription process
     model_name: Optional[str] = None
-    time_seconds: Optional[float] = None
+    transcription_time_seconds: Optional[float] = None
 
     # Common metrics with explicit fields
 

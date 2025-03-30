@@ -69,7 +69,7 @@ class SQLiteRepositoryAdapter(TranscriptionRepositoryPort):
                     path, transcribed_text, language_code, confidence,
                     avg_logprob_mean, compression_ratio_mean, no_speech_prob_mean,
                     audio_duration_seconds, word_count, words_per_second,
-                    model_name, time_seconds
+                    model_name, transcription_time_seconds
                 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
@@ -84,7 +84,7 @@ class SQLiteRepositoryAdapter(TranscriptionRepositoryPort):
                     metrics.word_count,
                     metrics.words_per_second,
                     metrics.model_name,
-                    metrics.time_seconds,
+                    metrics.transcription_time_seconds,
                 ),
             )
 
@@ -135,7 +135,7 @@ class SQLiteRepositoryAdapter(TranscriptionRepositoryPort):
                     word_count=row["word_count"],
                     words_per_second=row["words_per_second"],
                     model_name=row["model_name"],
-                    time_seconds=row["time_seconds"],
+                    transcription_time_seconds=row["transcription_time_seconds"],
                     source=MetricSource.WHISPER,
                 )
 
@@ -200,7 +200,7 @@ class SQLiteRepositoryAdapter(TranscriptionRepositoryPort):
                     word_count=row["word_count"],
                     words_per_second=row["words_per_second"],
                     model_name=row["model_name"],
-                    time_seconds=row["time_seconds"],
+                    transcription_time_seconds=row["transcription_time_seconds"],
                     source=MetricSource.WHISPER,
                 )
 

@@ -40,7 +40,6 @@ class WhisperTranscriberAdapter(TranscriberPort):
     """
 
     def __init__(self, model: WhisperModelAdapter):
-        # Initialize with provided model
         self.model = model
 
     def _calculate_confidence(
@@ -121,11 +120,11 @@ class WhisperTranscriberAdapter(TranscriberPort):
             words_per_second=(word_count / audio_duration)
             if audio_duration > 0 and word_count > 0
             else None,
+            model_name=self.model.name,
             source=MetricSource.WHISPER,
             additional_metrics={
                 "segments_count": len(segments),
                 "temperature": segments[0].get("temperature") if segments else None,
-                "model_name": self.model.name,
             },
         )
 
@@ -146,14 +145,26 @@ class WhisperTranscriberAdapter(TranscriberPort):
         Returns:
             A Transcription object containing the transcribed text and associated metrics
         """
-        # Use the provided model to transcribe the audio file
-        result = self.model.transcribe(
-            str(audio_file.path),
-            language=language.code if language else None,
-        )
+        # Time the transcription process using monotonic for more accurate measurement
+        import time
+
+        start_time = time.monotonic()
+
+        # Use the provided model to transcribe with the specified language
+        result = self.model.transcribe(str(audio_file.path), language=language.code)
+
+        # Calculate transcription time
+        transcription_time_seconds = time.monotonic() - start_time
 
         # Extract metrics from the result
         metrics = self._extract_metrics_from_result(result)
+
+        # Add transcription time to metrics
+        # Create a new TranscriptionMetrics object including all fields from the original
+        # metrics object, but with the updated transcription_time_seconds
+        metrics_dict = {k: v for k, v in metrics.__dict__.items() if not k.startswith("_")}
+        metrics_dict["transcription_time_seconds"] = transcription_time_seconds
+        metrics = TranscriptionMetrics(**metrics_dict)
 
         # Create and return a Transcription object
         return Transcription(
@@ -178,11 +189,26 @@ class WhisperTranscriberAdapter(TranscriberPort):
             A Transcription object containing the transcribed text, detected language,
             and associated metrics
         """
+        # Time the transcription process using monotonic for more accurate measurement
+        import time
+
+        start_time = time.monotonic()
+
         # Use the provided model to detect language and transcribe
         result = self.model.transcribe(str(audio_file.path))
 
+        # Calculate transcription time
+        transcription_time_seconds = time.monotonic() - start_time
+
         # Extract metrics from the result
         metrics = self._extract_metrics_from_result(result)
+
+        # Add transcription time to metrics
+        # Create a new TranscriptionMetrics object including all fields from the original
+        # metrics object, but with the updated transcription_time_seconds
+        metrics_dict = {k: v for k, v in metrics.__dict__.items() if not k.startswith("_")}
+        metrics_dict["transcription_time_seconds"] = transcription_time_seconds
+        metrics = TranscriptionMetrics(**metrics_dict)
 
         # Create and return a Transcription with detected language
         return Transcription(
