@@ -9,7 +9,7 @@ description = "A CLI tool for transcribing audio files in multiple languages."
 authors = [{ name = "Artem Dudarev", email = "dudarev@gmail.com" }]
 requires-python = ">=3.12"
 dependencies = [
-    "openai-whisper",
+    "openai-whisper==20240930",
 ]
 
 [project.scripts]
