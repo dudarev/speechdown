@@ -1,9 +1,17 @@
-.PHONY: format lint test test-integration test-all mypy ci init run validate requirements-install requirements-update list-sql coverage-view
+.PHONY: format lint test test-integration test-all mypy ci init run validate requirements-install requirements-update list-sql coverage-view check-ffmpeg install-dev
 
 
 # Requirements
 
-requirements-install:
+check-ffmpeg:
+	@if ! command -v ffmpeg > /dev/null 2>&1; then \
+		echo "ffmpeg not found. Installing via Homebrew..."; \
+		brew install ffmpeg; \
+	else \
+		echo "ffmpeg is already installed."; \
+	fi
+
+requirements: check-ffmpeg
 	pip install uv
 	uv pip install -e '.[testing]'
 
