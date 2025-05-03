@@ -4,13 +4,18 @@ This file tracks short-term implementation tasks following [ADR 006](docs/adrs/0
 
 Align with [roadmap](docs/planning/roadmap.md) for mid-term planning.
 
-## Current Tasks
+## In Progress
 
+- [x] ADR 010: Introduce Markdown Design Documents for Feature Implementation
+- [ ] First design document: `2025-05-dd-file-output.md` - how to implement file output
+  - [ ] Support output directory configuration via config file and command
+  - [ ] Map speech notes to daily text files with timestamped headers
+  - [ ] Allow specification of output path, filename formats, and templates
 - [ ] Collect relevant notes about SpeechDown in SpeechDown format
-- [ ] Implement date range filtering for transcriptions
-  - [ ] pass date range in CLI
-  - [ ] filter files based on date
-  - [ ] output transcriptions based on date range
+- [ ] Introduce `current/` and `archive/` directories for ADRs too
+
+## Nearest Future
+
 - [ ] Add configurable model selection
   - [ ] Add model_name field to ConfigAdapter
   - [ ] Update config.json schema to include model selection
