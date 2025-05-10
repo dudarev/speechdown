@@ -8,7 +8,7 @@ from speechdown.infrastructure.adapters.audio_file_adapter import (
     AudioFileAdapter,
 )
 from speechdown.infrastructure.adapters.config_adapter import ConfigAdapter
-from speechdown.infrastructure.adapters.output_adapter import MarkdownOutputAdapter
+from speechdown.infrastructure.adapters.file_output_adapter import FileOutputAdapter
 from speechdown.infrastructure.database import initialize_database
 from speechdown.infrastructure.schema import SCHEMA
 from speechdown.application.services.transcription_service import (
@@ -81,6 +81,7 @@ def init(directory: Path) -> int:
 
         config_adapter = ConfigAdapter.load_config_from_path(speechdown_paths.config, create=True)
         config_adapter.set_default_languages_if_not_set()
+        config_adapter.set_default_output_dir_if_not_set()
 
         return 0
     except Exception as e:
@@ -105,7 +106,8 @@ def transcribe(directory: Path, dry_run: bool, ignore_existing: bool) -> int:
 
         audio_file_adapter = AudioFileAdapter()
         config_adapter = ConfigAdapter.load_config_from_path(speechdown_paths.config)
-        output_adapter = MarkdownOutputAdapter()
+        config_adapter.set_default_output_dir_if_not_set()
+        output_adapter = FileOutputAdapter(config_adapter)
         repository_adapter = SQLiteRepositoryAdapter(speechdown_paths.db)
 
         # Create model and transcriber
@@ -177,6 +179,37 @@ def add_transcribe_arguments(parser) -> None:
     )
 
 
+def config(directory: Path, output_dir: str | None = None) -> int:
+    """
+    Configure the speechdown project settings.
+
+    Args:
+        directory: The directory containing the speechdown project
+        output_dir: The directory to store transcription output files
+
+    Returns:
+        Exit code (0 for success)
+    """
+    try:
+        speechdown_paths = SpeechDownPaths.from_working_directory(directory)
+        config_adapter = ConfigAdapter.load_config_from_path(speechdown_paths.config)
+        
+        if output_dir is not None:
+            config_adapter.set_output_dir(output_dir)
+            print(f"Output directory set to: {output_dir}")
+            
+        # Display current configuration
+        print("Current configuration:")
+        print(f"  Languages: {', '.join([lang.code for lang in config_adapter.get_languages()])}")
+        output_dir_value = config_adapter.get_output_dir()
+        print(f"  Output directory: {output_dir_value if output_dir_value else 'Not set'}")
+        
+        return 0
+    except Exception as e:
+        logging.error(f"Error during configuration: {e}")
+        return 1
+
+
 def cli() -> int:
     """
     Main CLI entry point.
@@ -193,6 +226,14 @@ def cli() -> int:
 
     parser_transcribe = subparsers.add_parser("transcribe", help="Transcribe audio files")
     add_transcribe_arguments(parser_transcribe)
+    
+    parser_config = subparsers.add_parser("config", help="Configure the speechdown project")
+    add_common_arguments(parser_config)
+    parser_config.add_argument(
+        "--output-dir", 
+        type=str, 
+        help="Set the output directory for transcription files"
+    )
 
     args = parser.parse_args()
 
@@ -205,6 +246,8 @@ def cli() -> int:
         if args.debug:
             logging.debug("Debug mode enabled")
         return transcribe(Path(args.directory), args.dry_run, args.ignore_existing)
+    elif args.command == "config":
+        return config(Path(args.directory), args.output_dir)
     else:
         parser.print_help()
         return 0

@@ -6,16 +6,19 @@ Align with [roadmap](docs/planning/roadmap.md) for mid-term planning.
 
 ## In Progress
 
+- [ ] Collect relevant notes about SpeechDown in SpeechDown format - ongoing 
 - [x] ADR 010: Introduce Markdown Design Documents for Feature Implementation
-- [ ] First design document: `2025-05-dd-file-output.md` - how to implement file output
-  - [ ] Support output directory configuration via config file and command
-  - [ ] Map speech notes to daily text files with timestamped headers
-  - [ ] Allow specification of output path, filename formats, and templates
-- [ ] Collect relevant notes about SpeechDown in SpeechDown format
-- [ ] Introduce `current/` and `archive/` directories for ADRs too
+- [x] First design document: `2025-05-dd-file-output.md` - how to implement file output
+  - [x] Support output directory configuration via config file and command
+  - [x] Map speech notes to daily text files with timestamped headers
+- [x] Introduce `current/` and `archive/` directories for ADRs too
 
 ## Nearest Future
 
+- [ ] Ensure language configuration setting exist
+  - [ ] Add it if it does not
+  - [ ] Describe it in README.md
+- Output file is updated as transcription occurs
 - [ ] Add configurable model selection
   - [ ] Add model_name field to ConfigAdapter
   - [ ] Update config.json schema to include model selection

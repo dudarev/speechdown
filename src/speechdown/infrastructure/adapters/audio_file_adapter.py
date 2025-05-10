@@ -6,9 +6,17 @@ from speechdown.application.ports.audio_file_port import AudioFilePort
 from speechdown.domain.value_objects import Timestamp
 
 
+# TODO(AD): Consider renaming this class to AudioFileCollector or AudioFileFinder
+# The name of this class is misleading. It should be something like
+# AudioFileCollector or AudioFileFinder. The name AudioFileAdapter suggests
+# that it is an adapter for a specific audio file format or library, which is not
+# the case. It is a utility class for collecting and processing audio files.
 class AudioFileAdapter(AudioFilePort):
     def get_audio_file(self, path: Path) -> AudioFile:
-        # Create a timestamp based on the file name or content
+        # TODO(AD): Implement a more robust way to generate a timestamp
+        # Parse timestamp from filename if needed
+        # or use file metadata (mutagen, tinytag, etc.)
+        # For now, we are using the file's last modified time
         dt = datetime.fromtimestamp(os.path.getmtime(path))
         return AudioFile(path=path, timestamp=Timestamp(value=dt))
 

@@ -1,5 +1,8 @@
 .PHONY: format lint test test-integration test-all mypy ci init run validate requirements-install requirements-update list-sql coverage-view check-ffmpeg install-dev
 
+clean:
+	rm -rf tests/data/transcripts
+	rm -rf .coverage*
 
 # Requirements
 
@@ -40,7 +43,7 @@ test-integration:
 	python -m pytest tests/integration -v --run-integration --run-slow
 
 test-all:
-	python -m pytest tests -v --run-integration --run-slow
+	python -m pytest tests -v --run-integration --run-slow --cov=src/speechdown --cov-report term --cov-report html:coverage_html
 
 ci: lint mypy test
 

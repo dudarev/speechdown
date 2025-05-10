@@ -8,6 +8,8 @@ SpeechDown is a command line tool designed to help you easily transcribe audio f
 - Automatically detect the language of the audio.
 - Save transcriptions to a database for later retrieval.
 - Output transcriptions to a file or the console.
+  - Transcripts can be saved to date-based Markdown files (e.g., `YYYY-MM-DD.md`).
+  - Each audio file's transcript is organized into timestamped H2-level sections within the output file.
 - Accept commands from the Markdown files it generated such as:
   - re-transcribe
   - learn correction
@@ -32,7 +34,17 @@ To initialize a SpeechDown project in a directory, run:
 sd init -d <directory>
 ```
 
-This will create a `.speechdown` directory within the specified directory, which will contain the database and configuration files.
+This will create a `.speechdown` directory within the specified directory, which will contain the database and configuration files. The configuration file (`config.json`) will include a default `output_dir` setting (`transcripts/`) where transcription files will be saved.
+
+### Configuration
+
+You can configure the output directory for transcripts using the `sd config` command:
+
+```bash
+sd config --output-dir path/to/your/transcripts
+```
+
+If `output_dir` is not set, or if the path is invalid, SpeechDown will output transcriptions to the standard output. By default, transcripts are saved to a `transcripts/` subdirectory within the initialized SpeechDown project directory unless otherwise specified.
 
 ### Transcription
 
@@ -42,13 +54,13 @@ To transcribe all audio files in a directory, run:
 sd transcribe -d <directory>
 ```
 
-This will transcribe all supported audio files found in the specified directory and its subdirectories.
+This will transcribe all supported audio files found in the specified directory and its subdirectories. Transcripts will be saved to files in the configured `output-dir`.
 
 ### Options
 
 - `-d, --directory`: The directory to operate in.
 - `--debug`: Enable debug mode for more verbose output.
-- `--dry-run`: Simulate the transcription process without making any changes to the database.
+- `--dry-run`: Simulate the transcription process without making any changes to the database or file system.
 
 ## Development
 

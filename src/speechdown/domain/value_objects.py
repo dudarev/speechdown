@@ -146,6 +146,9 @@ class Language:
         else:
             raise ValueError(f"Invalid language code: {code}")
 
+    def __str__(self):
+        return self.code
+
 
 class MetricSource(Enum):
     """Source of the transcription metrics"""
