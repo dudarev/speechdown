@@ -23,6 +23,7 @@ from speechdown.infrastructure.adapters.whisper_model_adapter import (
 from speechdown.infrastructure.adapters.repository_adapter import (
     SQLiteRepositoryAdapter,
 )
+from speechdown.domain.value_objects import Language, LANGUAGES
 
 
 def configure_logging(debug_mode: bool) -> None:
@@ -179,13 +180,17 @@ def add_transcribe_arguments(parser) -> None:
     )
 
 
-def config(directory: Path, output_dir: str | None = None) -> int:
+def config(directory: Path, output_dir: str | None = None, languages: str | None = None, 
+         add_language: str | None = None, remove_language: str | None = None) -> int:
     """
     Configure the speechdown project settings.
 
     Args:
         directory: The directory containing the speechdown project
         output_dir: The directory to store transcription output files
+        languages: Comma-separated list of language codes to set (replaces existing languages)
+        add_language: Language code to add to the configuration
+        remove_language: Language code to remove from the configuration
 
     Returns:
         Exit code (0 for success)
@@ -194,9 +199,57 @@ def config(directory: Path, output_dir: str | None = None) -> int:
         speechdown_paths = SpeechDownPaths.from_working_directory(directory)
         config_adapter = ConfigAdapter.load_config_from_path(speechdown_paths.config)
         
+        # Handle output directory configuration
         if output_dir is not None:
             config_adapter.set_output_dir(output_dir)
             print(f"Output directory set to: {output_dir}")
+        
+        # Handle language configuration
+        if languages is not None:
+            # Set the complete list of languages
+            try:
+                language_codes = [code.strip() for code in languages.split(",")]
+                new_languages = []
+                for code in language_codes:
+                    if code not in LANGUAGES:
+                        print(f"Warning: '{code}' is not a recognized language code. Skipping.")
+                    else:
+                        new_languages.append(Language(code))
+                
+                if new_languages:
+                    config_adapter.set_languages(new_languages)
+                    print(f"Languages updated: {', '.join([lang.code for lang in new_languages])}")
+                else:
+                    print("No valid languages provided. Configuration unchanged.")
+            except ValueError as e:
+                print(f"Error setting languages: {e}")
+        
+        if add_language is not None:
+            # Add a single language
+            try:
+                if add_language not in LANGUAGES:
+                    print(f"Warning: '{add_language}' is not a recognized language code. Skipping.")
+                else:
+                    current_languages = config_adapter.get_languages()
+                    if any(lang.code == add_language for lang in current_languages):
+                        print(f"Language '{add_language}' already in configuration. No changes made.")
+                    else:
+                        new_languages = current_languages + [Language(add_language)]
+                        config_adapter.set_languages(new_languages)
+                        print(f"Added language: {add_language}")
+            except ValueError as e:
+                print(f"Error adding language: {e}")
+        
+        if remove_language is not None:
+            # Remove a single language
+            current_languages = config_adapter.get_languages()
+            new_languages = [lang for lang in current_languages if lang.code != remove_language]
+            
+            if len(current_languages) == len(new_languages):
+                print(f"Language '{remove_language}' not found in configuration. No changes made.")
+            else:
+                config_adapter.set_languages(new_languages)
+                print(f"Removed language: {remove_language}")
             
         # Display current configuration
         print("Current configuration:")
@@ -234,6 +287,21 @@ def cli() -> int:
         type=str, 
         help="Set the output directory for transcription files"
     )
+    parser_config.add_argument(
+        "--languages",
+        type=str,
+        help="Set a comma-separated list of language codes (e.g., 'en,fr,de')"
+    )
+    parser_config.add_argument(
+        "--add-language",
+        type=str,
+        help="Add a single language code to the configuration"
+    )
+    parser_config.add_argument(
+        "--remove-language",
+        type=str, 
+        help="Remove a single language code from the configuration"
+    )
 
     args = parser.parse_args()
 
@@ -247,7 +315,13 @@ def cli() -> int:
             logging.debug("Debug mode enabled")
         return transcribe(Path(args.directory), args.dry_run, args.ignore_existing)
     elif args.command == "config":
-        return config(Path(args.directory), args.output_dir)
+        return config(
+            Path(args.directory), 
+            args.output_dir,
+            args.languages,
+            args.add_language,
+            args.remove_language
+        )
     else:
         parser.print_help()
         return 0
