@@ -1,5 +1,11 @@
 File inspired by [The append-and-review note idea by Andrej Karpathy](https://karpathy.bearblog.dev/the-append-and-review-note/)
 
+- When creating a design doc and mentioning tests there a reference to existing ADRs should should be made. I need to think where to put this thought either to the ADR about design docs or into the rules for the copilot. 
+
+- By the way, how can I set up the rules for the copilot? 
+
+- When instructing a copilot to create design doc it needs to be mentioned that it should should stop after the design doc created for me to review, edit it and give feedback. With language settings it was able to create the design doc and implement it. it was okay but in general this doesn't look like the right approach.
+
 ## 2025-03-17 11:27
 
 - **Speech Down Project Enhancements:**
