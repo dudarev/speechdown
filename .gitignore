@@ -20,3 +20,6 @@ requirements.txt
 
 # legacy
 legacy
+
+# tests data
+tests/data/transcripts
