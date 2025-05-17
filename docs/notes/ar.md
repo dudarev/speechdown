@@ -1,3 +1,5 @@
+File inspired by [The append-and-review note idea by Andrej Karpathy](https://karpathy.bearblog.dev/the-append-and-review-note/)
+
 ## 2025-03-17 11:27
 
 - **Speech Down Project Enhancements:**
