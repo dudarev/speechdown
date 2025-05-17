@@ -1,6 +1,8 @@
 File inspired by [The append-and-review note idea by Andrej Karpathy](https://karpathy.bearblog.dev/the-append-and-review-note/)
 
-- Refactor handlers.py into smaller files
+- Start CHANGELOG.md
+
+- ✅ Refactor handlers.py into smaller files (completed on 2025-05-17)
 
 - When creating a design doc and mentioning tests there a reference to existing ADRs should should be made. I need to think where to put this thought either to the ADR about design docs or into the rules for the copilot. 
 

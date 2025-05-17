@@ -1,7 +1,7 @@
 import json
 import pytest
 
-from speechdown.presentation.cli.commands.handlers import config
+from speechdown.presentation.cli.commands.config import config
 
 
 @pytest.fixture

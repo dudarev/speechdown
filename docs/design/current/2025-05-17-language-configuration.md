@@ -61,7 +61,7 @@ Ensure language configuration settings exist and are properly documented, making
 - The default language set will include English, Ukrainian, and Russian as already defined in `DEFAULT_LANGUAGES`.
 
 #### Command Line Interface
-- Enhance the existing `config` command in `presentation/cli/commands/handlers.py`.
+- Enhance the existing `config` command in `presentation/cli/commands/config.py`.
 - Add parameters to modify language settings:
   - `--languages` to set the complete list of languages.
   - `--add-language` to add a single language.
@@ -118,7 +118,7 @@ Ensure language configuration settings exist and are properly documented, making
    - Add `--remove-language` parameter to remove a specific language.
 
 2. **Implement Command Handlers**:
-   - Update the `config()` function in `handlers.py` to process new language parameters.
+   - Update the `config()` function in `config.py` to process new language parameters.
    - Ensure proper validation and error handling for language codes.
 
 3. **Write Unit Tests**:
