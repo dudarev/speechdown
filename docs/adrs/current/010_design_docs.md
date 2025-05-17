@@ -14,7 +14,7 @@ Keeping that information scattered across commits or issue threads makes future 
 
 We will add **Design Documents** (DDs) to the repository with the following conventions:
 
-- **Location** `docs/design/current/` for active work, `docs/design/archive/` for completed features
+- **Location** `docs/design/current/` for active work, `docs/design/archive/` for features that are not relevant anymore.
 - **File naming** `YYYY-MM-DD-feature-name.md` (e.g., `2025-05-03-file-output.md`)
 - **Format** lightweight Markdown template that may contain
   1. **Product Requirements** (objective, use cases, success metrics)
