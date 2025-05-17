@@ -1,5 +1,7 @@
 File inspired by [The append-and-review note idea by Andrej Karpathy](https://karpathy.bearblog.dev/the-append-and-review-note/)
 
+- Do research about timestamps. This is twofold. One is to extract timestamps from the filename and another is to extract the timestamp from metadata. data. and the next step after this research is to use that timestamp to add to markdown files.
+
 - Start CHANGELOG.md
 
 - ✅ Refactor handlers.py into smaller files (completed on 2025-05-17)
