@@ -18,9 +18,9 @@ We will implement a multi-layered task tracking system:
 
 2. Mid/Long-term planning:
 
-   - Create a [planning](../../docs/planning/) directory with:
-     - [roadmap.md](../../docs/planning/roadmap.md) for mid-term feature roadmaps and milestones
-     - [vision.md](../../docs/planning/vision.md) for long-term development goals and architectural direction
+   - Create a [planning](../../../docs/planning/) directory with:
+     - [roadmap.md](../../../docs/planning/roadmap.md) for mid-term feature roadmaps and milestones
+     - [vision.md](../../../docs/planning/vision.md) for long-term development goals and architectural direction
 
 3. Task promotion process:
    - Tasks start in `TODO.md`

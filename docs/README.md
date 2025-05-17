@@ -68,7 +68,7 @@ See `Makefile` for development commands.
 
 ### Task Tracking
 
-For information on how tasks and features are tracked and prioritized, see [ADR-006](adrs/006_task_tracking_approach.md).
+For information on how tasks and features are tracked and prioritized, see [ADR-006](adrs/current/006_task_tracking_approach.md)
 
 ### Continuous Integration
 
