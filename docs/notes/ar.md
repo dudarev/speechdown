@@ -1,6 +1,14 @@
 File inspired by [The append-and-review note idea by Andrej Karpathy](https://karpathy.bearblog.dev/the-append-and-review-note/)
 
-- Do research about timestamps. This is twofold. One is to extract timestamps from the filename and another is to extract the timestamp from metadata. data. and the next step after this research is to use that timestamp to add to markdown files.
+- ADR about research:
+  - Define purpose
+  - Location of research scripts
+  - Record outcomes
+
+- Research how to extract timestamps for audio files in two ways:
+  1. From the filename: Investigate systematic methods to parse timestamps embedded in audio file names.
+  2. From file metadata: Explore how to retrieve creation or recording timestamps from audio file metadata.
+- The goal is to use these extracted timestamps to add accurate time information to markdown files.
 
 - Start CHANGELOG.md
 
