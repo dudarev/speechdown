@@ -38,9 +38,7 @@ def transcribe(directory: Path, dry_run: bool, ignore_existing: bool) -> int:
 
         # Create model and transcriber
         model_name = config_adapter.get_model_name()
-        # Since set_default_model_name_if_not_set has been called, model_name should not be None.
-        # If it were None, WhisperModelAdapter would use its own default "tiny".
-        # However, we explicitly pass the configured or default model_name.
+        # model_name is guaranteed to be set by set_default_model_name_if_not_set.
         whisper_model = WhisperModelAdapter(model_name=model_name) 
         transcriber_adapter = WhisperTranscriberAdapter(whisper_model)
 
