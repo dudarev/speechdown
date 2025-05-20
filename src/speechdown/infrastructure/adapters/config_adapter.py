@@ -36,7 +36,9 @@ class ConfigAdapter(ConfigPort):
         self.output_dir = output_dir
         self._save_config()
 
-    def get_model_name(self) -> str | None:
+    def get_model_name(self) -> str:
+        if self.model_name is None:
+            return DEFAULT_MODEL_NAME
         return self.model_name
 
     def set_model_name(self, model_name: str | None) -> None:
