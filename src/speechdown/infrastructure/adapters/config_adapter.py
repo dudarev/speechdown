@@ -55,7 +55,7 @@ class ConfigAdapter(ConfigPort):
             self._save_config()
 
     def set_default_model_name_if_not_set(self):
-        if not self.model_name:
+        if self.model_name is None:
             self.model_name = DEFAULT_MODEL_NAME
             self._save_config()
 
