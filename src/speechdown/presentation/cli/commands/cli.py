@@ -56,6 +56,11 @@ def cli() -> int:
         type=str, 
         help="Remove a single language code from the configuration"
     )
+    parser_config.add_argument(
+        "--model-name",
+        type=str,
+        help="Set the default model name for transcription (e.g., 'tiny', 'base', 'small')"
+    )
 
     args = parser.parse_args()
 
@@ -74,7 +79,8 @@ def cli() -> int:
             args.output_dir,
             args.languages,
             args.add_language,
-            args.remove_language
+            args.remove_language,
+            args.model_name
         )
     else:
         parser.print_help()

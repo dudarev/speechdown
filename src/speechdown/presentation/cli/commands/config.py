@@ -10,7 +10,7 @@ __all__ = ["config"]
 
 
 def config(directory: Path, output_dir: str | None = None, languages: str | None = None, 
-         add_language: str | None = None, remove_language: str | None = None) -> int:
+         add_language: str | None = None, remove_language: str | None = None, model_name: str | None = None) -> int:
     """
     Configure the speechdown project settings.
 
@@ -32,6 +32,11 @@ def config(directory: Path, output_dir: str | None = None, languages: str | None
         if output_dir is not None:
             config_adapter.set_output_dir(output_dir)
             print(f"Output directory set to: {output_dir}")
+
+        # Handle model name configuration
+        if model_name is not None:
+            config_adapter.set_model_name(model_name)
+            print(f"Model name set to: {model_name}")
         
         # Handle language configuration
         if languages is not None:
@@ -85,6 +90,8 @@ def config(directory: Path, output_dir: str | None = None, languages: str | None
         print(f"  Languages: {', '.join([lang.code for lang in config_adapter.get_languages()])}")
         output_dir_value = config_adapter.get_output_dir()
         print(f"  Output directory: {output_dir_value if output_dir_value else 'Not set'}")
+        model_name_value = config_adapter.get_model_name()
+        print(f"  Model name: {model_name_value if model_name_value else 'Not set'}")
         
         return 0
     except Exception as e:
