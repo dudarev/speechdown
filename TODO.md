@@ -24,6 +24,7 @@ Align with [roadmap](docs/planning/roadmap.md) for mid-term planning.
   - [ ] Update config.json schema to include model selection
   - [ ] Create CLI command to update config with model selection
   - [ ] Pass model_name from config to WhisperModelAdapter in commands.py
+- Remove TranscriptionCachePort and what depends on it
 - [ ] Improve transcription output handling
   - [ ] Get existing output
   - [ ] Update transcriptions based on existing output
