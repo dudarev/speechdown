@@ -21,7 +21,7 @@ def temp_speechdown_dir(tmp_path):
 
 def test_config_displays_current_configuration(temp_speechdown_dir, capsys):
     """Test that the config command displays the current configuration."""
-    result = config(temp_speechdown_dir)
+    result = config(directory=temp_speechdown_dir)
     
     assert result == 0
     
@@ -35,7 +35,7 @@ def test_config_sets_output_directory(temp_speechdown_dir, capsys):
     """Test that the config command sets the output directory."""
     output_dir = "custom_transcripts"
     
-    result = config(temp_speechdown_dir, output_dir)
+    result = config(directory=temp_speechdown_dir, output_dir=output_dir)
     
     assert result == 0
     
@@ -57,7 +57,7 @@ def test_config_handles_error(tmp_path, capsys):
     non_existent_dir = tmp_path / "non_existent"
     
     # The directory doesn't exist, so this should fail
-    result = config(non_existent_dir)
+    result = config(directory=non_existent_dir)
     
     assert result == 1
 
@@ -66,7 +66,7 @@ def test_config_sets_languages(temp_speechdown_dir, capsys):
     """Test that the config command sets languages from a comma-separated list."""
     languages = "en,fr,de"
     
-    result = config(temp_speechdown_dir, languages=languages)
+    result = config(directory=temp_speechdown_dir, languages=languages)
     
     assert result == 0
     
@@ -87,7 +87,7 @@ def test_config_adds_language(temp_speechdown_dir, capsys):
     """Test adding a single language to the configuration."""
     add_language = "fr"
     
-    result = config(temp_speechdown_dir, add_language=add_language)
+    result = config(directory=temp_speechdown_dir, add_language=add_language)
     
     assert result == 0
     
@@ -111,7 +111,7 @@ def test_config_removes_language(temp_speechdown_dir, capsys):
     """Test removing a language from the configuration."""
     remove_language = "uk"
     
-    result = config(temp_speechdown_dir, remove_language=remove_language)
+    result = config(directory=temp_speechdown_dir, remove_language=remove_language)
     
     assert result == 0
     
@@ -134,7 +134,7 @@ def test_config_handles_invalid_language(temp_speechdown_dir, capsys):
     """Test that the config command handles invalid language codes properly."""
     languages = "en,invalid,fr"
     
-    result = config(temp_speechdown_dir, languages=languages)
+    result = config(directory=temp_speechdown_dir, languages=languages)
     
     assert result == 0  # Should still succeed with a warning
     
@@ -158,7 +158,7 @@ def test_config_with_existing_language(temp_speechdown_dir, capsys):
     """Test adding a language that is already in the configuration."""
     add_language = "en"  # Already exists in the fixture
     
-    result = config(temp_speechdown_dir, add_language=add_language)
+    result = config(directory=temp_speechdown_dir, add_language=add_language)
     
     assert result == 0
     

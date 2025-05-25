@@ -75,12 +75,12 @@ def cli() -> int:
         return transcribe(Path(args.directory), args.dry_run, args.ignore_existing)
     elif args.command == "config":
         return config(
-            Path(args.directory), 
-            args.output_dir,
-            args.languages,
-            args.add_language,
-            args.remove_language,
-            args.model_name
+            directory=Path(args.directory), 
+            output_dir=args.output_dir,
+            languages=args.languages,
+            add_language=args.add_language,
+            remove_language=args.remove_language,
+            model_name=args.model_name
         )
     else:
         parser.print_help()
