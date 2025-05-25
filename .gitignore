@@ -23,3 +23,6 @@ legacy
 
 # tests data
 tests/data/transcripts
+
+# Scripts data
+scripts/*/data/
