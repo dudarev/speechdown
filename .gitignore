@@ -23,3 +23,6 @@ legacy
 
 # tests data
 tests/data/transcripts
+
+# Python bytecode files
+*.pyc
