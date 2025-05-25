@@ -1,6 +1,6 @@
 # Show Help Command
 
-- **Action:** Run `speechdown --help` in the terminal.
+- **Action:** Run `sd --help` in the terminal.
   - Expected: The help message is displayed, showing available commands and options.
 
 - **Action:** Check for clarity of the help text.
