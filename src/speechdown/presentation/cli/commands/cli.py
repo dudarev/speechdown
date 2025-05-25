@@ -59,7 +59,7 @@ def cli() -> int:
     parser_config.add_argument(
         "--model-name",
         type=str,
-        help="Set the default model name for transcription (e.g., 'tiny', 'base', 'small')"
+        help="Set the default model name for transcription (e.g., 'tiny', 'base', 'small', 'medium', 'large', 'turbo')"
     )
 
     args = parser.parse_args()
