@@ -1,5 +1,7 @@
 File inspired by [The append-and-review note idea by Andrej Karpathy](https://karpathy.bearblog.dev/the-append-and-review-note/)
 
+- If the `-d` (directory) option is not provided when running the CLI, it should default to using the current working directory (the directory from which the command is executed) as the target for processing audio files.
+
 - ADR about research:
   - Define purpose
   - Location of research scripts
