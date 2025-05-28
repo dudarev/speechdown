@@ -53,7 +53,8 @@ def add_common_arguments(parser: argparse.ArgumentParser) -> None:
         "-d",
         "--directory",
         type=str,
-        required=True,
+        required=False,
+        default=".",
         help="Directory to work with",
     )
 
