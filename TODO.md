@@ -6,28 +6,16 @@ Align with [roadmap](docs/planning/roadmap.md) for mid-term planning.
 
 ## In Progress
 
-- [ ] Collect relevant notes about SpeechDown in SpeechDown format - ongoing - use [ar](docs/notes/ar.md) notes
-- [ ] Add configurable model selection
-  - [ ] Add model_name field to ConfigAdapter
-  - [ ] Update config.json schema to include model selection
-  - [ ] Create CLI command to update config with model selection
-  - [ ] Pass model_name from config to WhisperModelAdapter in commands.py
+- Collect relevant notes about SpeechDown - ongoing - use [ar](docs/notes/ar.md) notes
+- Clean-up branches on GitHub https://github.com/dudarev/speechdown
 - Research: Audio Timestamp Extraction
   - From file names
   - From file metadata
-- [x] Remove TranscriptionCachePort and what depends on it
-- [x] ADR 010: Introduce Markdown Design Documents for Feature Implementation
-- [x] First design document: `2025-05-dd-file-output.md` - how to implement file output
-  - [x] Support output directory configuration via config file and command
-  - [x] Map speech notes to daily text files with timestamped headers
-- [x] Introduce `current/` and `archive/` directories for ADRs too
-- [x] Ensure language configuration setting exist
-  - [x] Add it if it does not
-  - [x] Describe it in README.md
+- If the `-d` (directory) option is not provided when running the CLI, it should default to using the current working directory (the directory from which the command is executed) as the target for processing audio files.
 
 ## Nearest Future
 
-- Introduce CHANGELOG.md (ADRs for it)
+- Introduce CHANGELOG.md (ADR for it)
 - Output file is updated as transcription occurs
 - [ ] Improve transcription output handling
   - [ ] Get existing output
