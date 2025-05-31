@@ -1,6 +1,6 @@
 # SpeechDown
 
-SpeechDown is a command line tool designed to help you easily transcribe audio files and manage those transcriptions.
+SpeechDown is a command line tool that transcribes audio files and organizes the results into structured Markdown files.
 
 ## Features
 
@@ -19,7 +19,7 @@ SpeechDown is a command line tool designed to help you easily transcribe audio f
 Currently SpeechDown is not available as a package yet. You can install it locally for development using:
 
 ```bash
-make requirements-install
+make requirements
 ```
 
 This will install the required dependencies including development tools.
