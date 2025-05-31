@@ -26,3 +26,7 @@ tests/data/transcripts
 
 # Scripts data
 scripts/*/data/
+
+# Python bytecode files
+*.pyc
+

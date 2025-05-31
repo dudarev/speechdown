@@ -128,18 +128,6 @@ class FileOutputAdapter(OutputPort):
             content_lines = []
             transcript_line = result.text if result.text is not None else ""
             content_lines.append(transcript_line)
-            metadata_lines = []
-            if isinstance(result, Transcription):
-                if result.language:
-                    metadata_lines.append(f"*Language: {result.language}*")
-                if result.metrics and result.metrics.confidence is not None:
-                    metadata_lines.append(f"*Confidence: {result.metrics.confidence:.2f}*")
-                if result.metrics and result.metrics.audio_duration_seconds is not None:
-                    metadata_lines.append(f"*Duration: {result.metrics.audio_duration_seconds:.2f} seconds*")
-            elif isinstance(result, CachedTranscription):
-                metadata_lines.append("*Retrieved from cache*")
-            if metadata_lines:
-                content_lines.extend(metadata_lines)
             section = f"{header_line}\n" + "\n".join(content_lines)
             sections.append(section)
 

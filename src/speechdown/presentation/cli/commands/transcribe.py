@@ -32,11 +32,14 @@ def transcribe(directory: Path, dry_run: bool, ignore_existing: bool) -> int:
         audio_file_adapter = AudioFileAdapter()
         config_adapter = ConfigAdapter.load_config_from_path(speechdown_paths.config)
         config_adapter.set_default_output_dir_if_not_set()
+        config_adapter.set_default_model_name_if_not_set() # Ensure model_name is set
         output_adapter = FileOutputAdapter(config_adapter)
         repository_adapter = SQLiteRepositoryAdapter(speechdown_paths.db)
 
         # Create model and transcriber
-        whisper_model = WhisperModelAdapter()
+        model_name = config_adapter.get_model_name()
+        # model_name is guaranteed to be set by set_default_model_name_if_not_set.
+        whisper_model = WhisperModelAdapter(model_name=model_name) 
         transcriber_adapter = WhisperTranscriberAdapter(whisper_model)
 
         transcription_service = TranscriptionService(
