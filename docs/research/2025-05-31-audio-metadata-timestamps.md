@@ -1,6 +1,6 @@
 # Extracting Timestamps from Audio File Metadata
 *Status*: Active
-*Date*: 2024-07-12
+*Date*: 2025-05-31
 
 ## Problem
 Audio files often contain embedded metadata, such as EXIF tags or ID3 tags, which may include creation or modification timestamps. Accessing this metadata can provide a reliable source for an audio file's timestamp, independent of the filename. This research will investigate methods and libraries for extracting timestamps from various audio file metadata formats.

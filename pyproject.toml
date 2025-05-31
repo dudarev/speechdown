@@ -16,7 +16,7 @@ dependencies = [
 sd = "speechdown.main:cli"
 
 [project.optional-dependencies]
-testing = ["pytest", "ruff", "mypy", "pytest-cov"]
+testing = ["pytest", "ruff", "mypy", "pytest-cov", "python-dotenv",]
 
 [tool.ruff]
 line-length = 100
