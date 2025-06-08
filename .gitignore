@@ -15,6 +15,11 @@ requirements.txt
 # VS Code
 .vscode/
 
+# Environment variables
+.env
+.env.*
+!.example.env
+
 # Project specific
 .speechdown/
 
@@ -24,5 +29,9 @@ legacy
 # tests data
 tests/data/transcripts
 
+# Scripts data
+scripts/*/data/
+
 # Python bytecode files
 *.pyc
+
