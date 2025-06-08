@@ -1,20 +1,31 @@
 File inspired by [The append-and-review note idea by Andrej Karpathy](https://karpathy.bearblog.dev/the-append-and-review-note/)
 
-- If the `-d` (directory) option is not provided when running the CLI, it should default to using the current working directory (the directory from which the command is executed) as the target for processing audio files.
+- GOAL: Start using for my daily notes
 
-- ADR about research:
-  - Define purpose
-  - Location of research scripts
-  - Record outcomes
+- GOAL: NEXT: Make usable by others
 
-- Research how to extract timestamps for audio files in two ways:
+- GOAL: NEXT: Write a blog post about it
+
+- TASK: RESEARCH: how to extract timestamps for audio files in two ways:
   1. From the filename: Investigate systematic methods to parse timestamps embedded in audio file names.
   2. From file metadata: Explore how to retrieve creation or recording timestamps from audio file metadata.
 - The goal is to use these extracted timestamps to add accurate time information to markdown files.
 
-- Start CHANGELOG.md
+- TASK: RESEARCH: rules for GitHub copilot, Jules, Claude Code etc.
 
-- ✅ Refactor handlers.py into smaller files (completed on 2025-05-17)
+- TASK: Start CHANGELOG.md, start `__init__.py` with version.
+
+- TASK: Generate more output when the script is running for informational purposes. This can be controlled by the verbose flag. 
+
+- Keep editing the first line in README.md (see vision.md). Keep editing the README.md file in general.
+
+Organize planning documents (such as ADRs, design, and research) into folders that reflect their status: 
+- `planning` for documents that are in the early planning or idea stage,
+- `current` for active and up-to-date docs,
+- `archive` for deprecated or superseded materials.
+This structure helps track the lifecycle and relevance of each document.
+
+- I can create a dedicated ADR describing the planning document structure and also update existing ADRs for each document type to reference this structure.
 
 - When creating a design doc and mentioning tests there a reference to existing ADRs should should be made. I need to think where to put this thought either to the ADR about design docs or into the rules for the copilot. 
 
@@ -34,14 +45,6 @@ File inspired by [The append-and-review note idea by Andrej Karpathy](https://ka
     - If partial transcription finished, add to a dedicated section.
     - If better partial transcription found, update the section.
     - Full transcription will also update section.
-
-## 2025-03-27 09:02:22
-
-- **Current goal: Publish and make usable**
-- **Primary functionality needed:**
-  - Transcribe daily notes in three different languages
-  - Integrate with personal workflow (`cron`)
-  - Support daily voice notes
 
 ## 2025-03-29 09:55:46
 

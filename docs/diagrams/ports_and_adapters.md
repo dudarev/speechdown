@@ -10,9 +10,8 @@ graph LR
         P2[ConfigPort]
         P3[OutputPort]
         P4[TranscriberPort]
-        P5[TranscriptionCachePort]
-        P6[TranscriptionModelPort]
-        P7[TranscriptionRepositoryPort]
+        P5[TranscriptionModelPort]
+        P6[TranscriptionRepositoryPort]
     end
 
     subgraph Infrastructure Layer
@@ -22,9 +21,8 @@ graph LR
         A3[FileOutputAdapter]
         A3b[OutputAdapter] 
         A4[WhisperTranscriberAdapter]
-        A5[FileSystemTranscriptionCacheAdapter]
-        A6[WhisperModelAdapter]
-        A7[RepositoryAdapter]
+        A5[WhisperModelAdapter]
+        A6[SQLiteRepositoryAdapter]
     end
 
     P1 --> A1
@@ -34,5 +32,4 @@ graph LR
     P4 --> A4
     P5 --> A5
     P6 --> A6
-    P7 --> A7
 ```

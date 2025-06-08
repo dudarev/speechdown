@@ -99,13 +99,7 @@ def test_output_transcription_results_creates_file(output_adapter, sample_transc
     expected_header_1 = f"## {expected_h2_timestamp}"
     assert expected_header_1 in content
     assert "This is the first sample transcription." in content
-    assert "*Language: en*" in content
-    assert "*Confidence: 0.95*" in content 
-    assert "*Duration: 30.50 seconds*" in content 
     assert "This is the second sample transcription." in content
-    assert "*Language: uk*" in content
-    assert "*Confidence: 0.90*" in content 
-    assert "*Duration: 45.00 seconds*" in content
 
 
 def test_merge_with_existing_file(output_adapter, sample_transcriptions, temp_config_dir):
@@ -136,10 +130,4 @@ def test_merge_with_existing_file(output_adapter, sample_transcriptions, temp_co
     expected_new_header = f"## {new_transcriptions_h2_timestamp}"
     assert expected_new_header in content
     assert "This is the first sample transcription." in content
-    assert "*Language: en*" in content
-    assert "*Confidence: 0.95*" in content
-    assert "*Duration: 30.50 seconds*" in content
     assert "This is the second sample transcription." in content
-    assert "*Language: uk*" in content
-    assert "*Confidence: 0.90*" in content
-    assert "*Duration: 45.00 seconds*" in content

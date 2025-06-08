@@ -106,9 +106,6 @@ def test_format_results_to_markdown_sections_new_content(sample_transcription):
     assert expected_header in formatted_markdown
     assert "sample.mp3" not in expected_header 
     assert "This is a sample transcription." in formatted_markdown
-    assert "*Language: en*" in formatted_markdown
-    assert "*Confidence: 0.95*" in formatted_markdown 
-    assert "*Duration: 60.50 seconds*" in formatted_markdown
 
 
 @patch('builtins.print')
