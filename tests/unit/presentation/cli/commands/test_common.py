@@ -1,5 +1,4 @@
 import argparse
-import pytest
 from speechdown.presentation.cli.commands.common import add_common_arguments
 
 def test_add_common_arguments_directory_default():
