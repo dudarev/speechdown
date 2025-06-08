@@ -1,5 +1,5 @@
 # Extracting Timestamps from Audio File Names
-*Status*: Completed - Phase 1
+*Status*: Completed
 *Date*: 2025-05-31
 
 ## Problem
@@ -27,6 +27,22 @@ Audio files often have timestamps embedded in their file names, but the formats 
 3. **Position-Based Logic Works**: Timestamps in audio filenames are typically located near the end, before the file extension, making backwards search naturally more accurate.
 
 4. **Component Validation is Essential**: Range checking (month 1-12, day 1-31, hour 0-23, etc.) is crucial for filtering out false positives that match the pattern structure but contain invalid values.
+
+### Parsing Results Summary
+
+📊 SUMMARY:
+  Total files processed: 9186
+  Successfully parsed:  6932
+  Unparseable:          2254 (25%)
+  Years found:          [2022, 2023, 2024, 2025]
+  Pattern usage:
+    YYYYMMDD_HHMMSS     : 5504
+    YYYYMMDD HHMMSS     : 925
+    YYMMDD_HHMMSS       : 503
+
+Such order of patterns probably should be adopted.
+
+Manually validated that unparseable files do not contain timestamps.
 
 ### Technical Implementation
 
@@ -80,7 +96,9 @@ The latest addition is a production-ready script designed for batch processing m
 
 **Key Features:**
 - **Batch Processing**: Reads filenames from stdin (pipe or interactive)
-- **Year Validation**: Restricts parsing to 2024-2025 timestamps only
+- **Year Validation**: The script currently restricts parsing to timestamps from 2024–2025.  
+    In production, consider expanding the valid year range (for example, from 2000 onwards) to support older files.  
+    For greater flexibility, make the year range configurable via environment variables or a configuration file. 
 - **Comprehensive Output**: Shows both successfully parsed and unparseable files
 - **Sorted Results**: Orders output chronologically
 - **Summary Statistics**: Provides processing counts and year distribution
@@ -103,7 +121,7 @@ This script demonstrates how the backwards search approach can be effectively de
 
 In `voice-cli` repository the [following approach](https://github.com/dudarev/voice-cli/blob/main/main.py#L152C1-L176C56) was used:
 
-```
+```python
 def get_file_timestamp(path: Path) -> datetime:
     """
     Try to extract timestamp from file name.
@@ -149,19 +167,16 @@ The new backwards search approach addresses all these issues by using position-b
 
 ## Next steps
 
-### Phase 2 - Integration and Enhancement
+### Integration and Enhancement
 - [ ] Integrate backwards search approach into main speechdown application
-- [x] ~~Add batch processing for multiple filenames~~ ✅ Completed with `parse_filenames_all.py`
-- [x] ~~Add year validation for recent recordings~~ ✅ Implemented 2024-2025 validation
+
+### Potential Advanced Features for Future Implementation
+- [ ] Machine learning approach for complex/ambiguous cases
+- [ ] Audio metadata correlation for timestamp validation
+- [ ] Integration with speech recognition pipeline
 - [ ] Add support for additional timestamp formats discovered in real-world data
 - [ ] Implement fuzzy matching for malformed timestamps
 - [ ] Add confidence scoring for timestamp extraction
-
-### Phase 3 - Advanced Features  
-- [ ] Machine learning approach for complex/ambiguous cases
-- [ ] Audio metadata correlation for timestamp validation
-- [x] ~~Batch processing optimization for large file collections~~ ✅ Completed
-- [ ] Integration with speech recognition pipeline
 
 ### Immediate Recommendation
 **Use the batch processing script** (`parse_filenames_all.py`) for production workflows as it combines the backwards search approach with year validation and comprehensive reporting suitable for real-world scenarios.

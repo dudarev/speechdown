@@ -18,23 +18,23 @@ from typing import List, Dict, Optional, Tuple
 
 PATTERNS_CONFIG = [
     {
-        "regex": re.compile(r"(?P<year>\d{4})(?P<month>\d{2})(?P<day>\d{2}) (?P<hour>\d{2})(?P<minute>\d{2})(?P<second>\d{2})"),
-        "is_yy": False,
-        "name": "YYYYMMDD HHMMSS"
-    },
-    {
         "regex": re.compile(r"(?P<year>\d{4})(?P<month>\d{2})(?P<day>\d{2})_(?P<hour>\d{2})(?P<minute>\d{2})(?P<second>\d{2})"),
         "is_yy": False,
         "name": "YYYYMMDD_HHMMSS"
     },
     {
+        "regex": re.compile(r"(?P<year>\d{4})(?P<month>\d{2})(?P<day>\d{2}) (?P<hour>\d{2})(?P<minute>\d{2})(?P<second>\d{2})"),
+        "is_yy": False,
+        "name": "YYYYMMDD HHMMSS"
+    },
+    {
         "regex": re.compile(r"(?P<year>\d{2})(?P<month>\d{2})(?P<day>\d{2})_(?P<hour>\d{2})(?P<minute>\d{2})(?P<second>\d{2})"),
         "is_yy": True,
         "name": "YYMMDD_HHMMSS"
-    }
+    },
 ]
 
-VALID_YEARS = {2023, 2024, 2025}
+VALID_YEARS = {2022, 2023, 2024, 2025}
 
 
 def validate_timestamp_components(parts, is_yy_format):
@@ -194,6 +194,13 @@ def print_results(successfully_parsed: List[Dict], unparseable_filenames: List[s
     if successfully_parsed:
         years = set(info['year'] for info in successfully_parsed)
         print(f"  Years found:          {sorted(years)}")
+
+        # Pattern statistics
+        from collections import Counter
+        pattern_counts = Counter(info['pattern_name'] for info in successfully_parsed)
+        print(f"  Pattern usage:")
+        for pattern, count in pattern_counts.most_common():
+            print(f"    {pattern:<20}: {count}")
 
 
 def main():
