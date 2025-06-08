@@ -28,20 +28,24 @@ This will install the required dependencies including development tools.
 
 ### Initialization
 
-To initialize a SpeechDown project in a directory, run:
+
+To initialize a SpeechDown project, run:
 
 ```bash
-sd init -d <directory>
+sd init
 ```
 
-This will create a `.speechdown` directory within the specified directory, which will contain the database and configuration files. The configuration file (`config.json`) will include a default `output_dir` setting (`transcripts/`) where transcription files will be saved.
+This will create a `.speechdown` directory in the current working directory, which will contain the database and configuration files. The configuration file (`config.json`) will include a default `output_dir` setting (`transcripts/`) where transcription files will be saved.
+
+**Note:** It is possible to specify a different directory for most commands using the `-d` or `--directory` option, if you want to operate in a directory other than the current working directory. See the Options section below for details.
 
 ### Configuration
+
 
 You can configure the output directory for transcripts using the `sd config` command:
 
 ```bash
-sd config -d <directory> --output-dir path/to/your/transcripts
+sd config --output-dir path/to/your/transcripts
 ```
 
 If `output_dir` is not set, or if the path is invalid, SpeechDown will output transcriptions to the standard output. By default, transcripts are saved to a `transcripts/` subdirectory within the initialized SpeechDown project directory unless otherwise specified.
@@ -50,24 +54,25 @@ If `output_dir` is not set, or if the path is invalid, SpeechDown will output tr
 
 SpeechDown supports multiple languages for transcription. You can configure which languages to use with the following commands:
 
+
 1. View current language configuration:
 ```bash
-sd config -d <directory>
+sd config
 ```
 
 2. Set specific languages (replaces existing languages):
 ```bash
-sd config -d <directory> --languages en,fr,de
+sd config --languages en,fr,de
 ```
 
 3. Add a single language to the configuration:
 ```bash
-sd config -d <directory> --add-language ja
+sd config --add-language ja
 ```
 
 4. Remove a language from the configuration:
 ```bash
-sd config -d <directory> --remove-language fr
+sd config --remove-language fr
 ```
 
 The default languages are English (en), Ukrainian (uk). SpeechDown supports all languages available in the Whisper model, including but not limited to:
@@ -84,19 +89,30 @@ Using the correct language codes improves transcription accuracy and performance
 
 ### Transcription
 
-To transcribe all audio files in a directory, run:
+
+To transcribe all audio files in the current directory, run:
 
 ```bash
-sd transcribe -d <directory>
+sd transcribe
 ```
 
-This will transcribe all supported audio files found in the specified directory and its subdirectories. Transcripts will be saved to files in the configured `output-dir`.
+This will transcribe all supported audio files found in the current directory and its subdirectories. Transcripts will be saved to files in the configured `output-dir`.
+
 
 ### Options
 
-- `-d, --directory`: The directory to operate in.
 - `--debug`: Enable debug mode for more verbose output.
 - `--dry-run`: Simulate the transcription process without making any changes to the database or file system.
+
+#### Directory Option
+
+For most commands, you can specify a directory to operate in using the `-d` or `--directory` option, for example:
+
+```bash
+sd transcribe -d path/to/your/project
+```
+
+If you do not specify this option, SpeechDown will use the current working directory by default.
 
 ## Development
 

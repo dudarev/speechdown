@@ -3,8 +3,8 @@
 - Navigate to test data directory (e.g., `tests/data`).
   - Action: `cd tests/data`
 
-- Ensure no local `speechdown_config.json` exists in the test directory.
-  - Action: `rm speechdown_config.json` (if it exists)
+- Ensure no local `.speechdown/config.json` exists in the test directory.
+  - Action: `rm .speechdown/config.json` (if it exists)
 
 - Ensure global model is set to a known default.
   - Action: `sd config --model-name tiny` (or your preferred default)
@@ -13,7 +13,7 @@
   - Action: `rm transcripts/*.md` (adjust path if needed)
 
 - Transcribe using the model.
-  - Action: `sd transcribe -d . --ignore-existing`
+  - Action: `sd transcribe --ignore-existing`
 
 - Verify transcription output.
   - Action: `cat transcripts/<YYYY-MM-DD>.md`
@@ -25,7 +25,7 @@
   - Action: `rm transcripts/*.md` (adjust path if needed)
 
 - Transcribe using the model.
-  - Action: `sd transcribe -d . --ignore-existing`
+  - Action: `sd transcribe --ignore-existing`
 
 - Verify transcription output.
   - Action: `cat transcripts/<YYYY-MM-DD>.md`
