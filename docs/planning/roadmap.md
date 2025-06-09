@@ -3,9 +3,8 @@
 This document outlines the mid-term development plan for SpeechDown, detailing features and improvements planned for the next 3-6 months.
 
 ## Replace voice-cli
-
-The nearest term goal is to replace the existing `voice-cli` usage with SpeechDown's CLI.
-`voice-cli` is our current tool for voice transcription that has limited functionality.
+The nearest term goal is to replace the existing [`voice-cli`](https://github.com/dudarev/voice-cli) usage with SpeechDown's CLI.  
+`voice-cli` is a tool for voice transcription that has limited functionality.
 The replacement will provide immediate benefits to users with minimal disruption to existing workflows.
 
 Key differences from the user standpoint in the beginning will be:
