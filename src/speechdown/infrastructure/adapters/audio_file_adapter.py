@@ -1,9 +1,11 @@
-import os
-from pathlib import Path
+from dataclasses import dataclass, field
 from datetime import datetime
-from speechdown.domain.entities import AudioFile
+from pathlib import Path
+
 from speechdown.application.ports.audio_file_port import AudioFilePort
+from speechdown.domain.entities import AudioFile
 from speechdown.domain.value_objects import Timestamp
+from ..services.file_timestamp_service import FileTimestampService
 
 
 # TODO(AD): Consider renaming this class to AudioFileCollector or AudioFileFinder
@@ -11,13 +13,12 @@ from speechdown.domain.value_objects import Timestamp
 # AudioFileCollector or AudioFileFinder. The name AudioFileAdapter suggests
 # that it is an adapter for a specific audio file format or library, which is not
 # the case. It is a utility class for collecting and processing audio files.
+@dataclass
 class AudioFileAdapter(AudioFilePort):
+    timestamp_service: FileTimestampService = field(default_factory=FileTimestampService)
+
     def get_audio_file(self, path: Path) -> AudioFile:
-        # TODO(AD): Implement a more robust way to generate a timestamp
-        # Parse timestamp from filename if needed
-        # or use file metadata (mutagen, tinytag, etc.)
-        # For now, we are using the file's last modified time
-        dt = datetime.fromtimestamp(os.path.getmtime(path))
+        dt = self.timestamp_service.get_timestamp(path)
         return AudioFile(path=path, timestamp=Timestamp(value=dt))
 
     def collect_audio_files(
@@ -37,7 +38,7 @@ class AudioFileAdapter(AudioFilePort):
         return audio_files
 
     def _get_file_timestamp(self, path: Path) -> datetime:
-        return datetime.fromtimestamp(path.stat().st_mtime)
+        return self.timestamp_service.get_timestamp(path)
 
     def _is_between(
         self, start_dt: datetime | None, end_dt: datetime | None, timestamp: datetime

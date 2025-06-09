@@ -11,7 +11,7 @@ from speechdown.infrastructure.adapters.whisper_model_adapter import WhisperMode
 def test_audio_file():
     """Fixture that creates a valid AudioFile instance using an existing file from the data folder."""
     return AudioFile(
-        path=Path("tests/data/subfolder/test-1.m4a"),
+        path=Path("tests/data/subfolder/test-1_20240315_143022.m4a"),
         timestamp=Timestamp.from_isoformat("2021-01-01T00:00:00Z"),
     )
 
