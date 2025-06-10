@@ -168,8 +168,9 @@ class FileOutputAdapter(OutputPort):
             sections.append(section)
 
         # TODO(AD): Remove this once the section title format is finalized
-        # Separate sections with markdown horizontal rule
-        return "\n\n---\n\n".join(sections) + "\n"
+        # Add horizontal rule after each section
+        sections_with_rules = [section + "\n\n---" for section in sections]
+        return "\n\n".join(sections_with_rules) + "\n"
 
     def _output_to_stdout(self, transcription_results: list[TranscriptionResult]) -> None:
         """Output transcription results to stdout when no file output is available."""
