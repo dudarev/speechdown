@@ -1,6 +1,6 @@
 import sqlite3
 import logging
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional
 
@@ -8,7 +8,7 @@ from speechdown.application.ports.transcription_repository_port import Transcrip
 from speechdown.domain.entities import CachedTranscription, Transcription
 from speechdown.domain.value_objects import Language, Timestamp, TranscriptionMetrics, MetricSource
 from speechdown.infrastructure.schema import SCHEMA
-from ..services.file_timestamp_service import FileTimestampService
+from speechdown.application.ports.timestamp_port import TimestampPort
 
 logger = logging.getLogger(__name__)
 
@@ -18,7 +18,7 @@ class SQLiteRepositoryAdapter(TranscriptionRepositoryPort):
     """SQLite implementation of the TranscriptionRepositoryPort."""
 
     db_path: Path
-    timestamp_service: FileTimestampService = field(default_factory=FileTimestampService)
+    timestamp_port: TimestampPort
 
     def __post_init__(self) -> None:
         """Initialize database schema."""
@@ -228,5 +228,5 @@ class SQLiteRepositoryAdapter(TranscriptionRepositoryPort):
                 conn.close()
 
     def _get_file_timestamp(self, path: Path):
-        """Get timestamp from file using the timestamp service."""
-        return self.timestamp_service.get_timestamp(path)
+        """Get timestamp from file using the timestamp port."""
+        return self.timestamp_port.get_timestamp(path)

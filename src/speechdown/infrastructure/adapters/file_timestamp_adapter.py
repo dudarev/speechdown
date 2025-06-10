@@ -34,8 +34,8 @@ VALID_YEAR_RANGE = (2000, 2099)
 
 
 @dataclass
-class FileTimestampService:
-    """Service for extracting timestamps from filenames with fallbacks."""
+class FileTimestampAdapter:
+    """Adapter for extracting timestamps from filenames with fallbacks."""
 
     def get_timestamp(self, path: Path) -> datetime:
         """Return timestamp extracted from filename or fallback to file mtime."""

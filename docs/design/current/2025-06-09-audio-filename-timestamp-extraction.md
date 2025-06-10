@@ -112,7 +112,7 @@ src/speechdown/infrastructure/
 ```
 
 **Updated AudioFileAdapter Changes:**
-- Inject `FileTimestampService` as a dependency
+- Inject `FileTimestampAdapter` as a dependency
 - Delegate timestamp extraction to the service
 - Remove direct file system timestamp access
 
@@ -139,7 +139,7 @@ src/speechdown/infrastructure/
 
 ### New Components to Create
 
-#### 4. `FileTimestampService` (Infrastructure Service)
+#### 4. `FileTimestampAdapter` (Infrastructure Adapter)
 **File:** `src/speechdown/infrastructure/services/file_timestamp_service.py` (new file)
 
 **Purpose:**
@@ -158,7 +158,7 @@ from pathlib import Path
 from typing import Optional, List, Dict, Any
 
 @dataclass
-class FileTimestampService:
+class FileTimestampAdapter:
     """Service for extracting timestamps from files using filename patterns and fallback strategies."""
     
     def get_timestamp(self, path: Path) -> datetime:
@@ -294,11 +294,11 @@ VALID_YEAR_RANGE = (2000, 2099)
 
 **Dependency Injection Pattern:**
 ```python
-from ..services.file_timestamp_service import FileTimestampService
+from ..adapters.file_timestamp_adapter import FileTimestampAdapter
 
 @dataclass
 class AudioFileAdapter(AudioFilePort):
-    timestamp_service: FileTimestampService = field(default_factory=FileTimestampService)
+    timestamp_service: FileTimestampAdapter = field(default_factory=FileTimestampAdapter)
     
     def get_audio_file(self, path: Path) -> AudioFile:
         dt = self.timestamp_service.get_timestamp(path)
@@ -346,12 +346,12 @@ class Config:
 ### Migration Strategy
 
 #### Phase 1: Core Implementation
-1. Create `FileTimestampService` infrastructure service
+1. Create `FileTimestampAdapter` infrastructure adapter
 2. Implement timestamp extraction with backwards search algorithm
 3. Add comprehensive unit tests for the service
 
 #### Phase 2: Integration
-1. Update `AudioFileAdapter` to use `FileTimestampService` via dependency injection
+1. Update `AudioFileAdapter` to use `FileTimestampAdapter` via dependency injection
 2. Update `TranscriptionService` and `SQLiteRepositoryAdapter` to use the same service
 3. Add configuration support for timestamp patterns and year validation
 

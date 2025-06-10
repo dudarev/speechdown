@@ -4,12 +4,12 @@ from pathlib import Path
 
 import pytest
 
-from speechdown.infrastructure.services.file_timestamp_service import FileTimestampService
+from speechdown.infrastructure.adapters.file_timestamp_adapter import FileTimestampAdapter
 
 
 @pytest.fixture
 def service():
-    return FileTimestampService()
+    return FileTimestampAdapter()
 
 
 def _create_tmp_file(tmp_path: Path, name: str, mtime: float) -> Path:
