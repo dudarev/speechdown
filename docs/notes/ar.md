@@ -11,8 +11,6 @@ File inspired by [The append-and-review note idea by Andrej Karpathy](https://ka
   2. From file metadata: Explore how to retrieve creation or recording timestamps from audio file metadata.
 - The goal is to use these extracted timestamps to add accurate time information to markdown files.
 
-- TASK: RESEARCH: rules for GitHub copilot, Jules, Claude Code etc.
-
 - TASK: Start CHANGELOG.md, start `__init__.py` with version.
 
 - TASK: Generate more output when the script is running for informational purposes. This can be controlled by the verbose flag. 
