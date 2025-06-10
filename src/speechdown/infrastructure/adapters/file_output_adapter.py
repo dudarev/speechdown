@@ -25,6 +25,15 @@ class FileOutputAdapter(OutputPort):
         path: Path | None = None,
         timestamp: datetime.datetime | None = None,
     ) -> None:
+        """
+        Output transcription results to files grouped by date.
+        
+        Args:
+            transcription_results: List of transcription results to output
+            path: Optional output directory path (overrides config)
+            timestamp: Optional fallback timestamp to use when transcription objects 
+                      don't have timestamps (e.g., for testing with predictable outputs)
+        """
         # Get the output directory from the configuration or use the provided path
         output_dir = self._get_output_directory(path)
 
@@ -51,7 +60,7 @@ class FileOutputAdapter(OutputPort):
         # Process each date and write to corresponding file
         for transcription_date, results in date_to_transcriptions.items():
             file_path = output_dir / self._generate_file_name(transcription_date)
-            self._write_to_file(file_path, results)
+            self._write_to_file(file_path, results, timestamp)
 
     def _get_output_directory(self, path: Path | None) -> Path | None:
         """Get the output directory from the config or use the provided path."""
