@@ -151,7 +151,7 @@ class FileOutputAdapter(OutputPort):
         """
         Formats a list of TranscriptionResult objects into Markdown sections.
         Each section has the format '## TIMESTAMP - FILENAME'.
-        Results are sorted in reverse chronological order (most recent first).
+        Final ordering is determined by MarkdownMerger which applies chronological order (earliest first).
         """
         if not transcription_results:
             return ""
@@ -169,8 +169,7 @@ class FileOutputAdapter(OutputPort):
                 filename = "unknown"
             result_tuples.append((result_timestamp, filename, result))
 
-        # Sort by timestamp descending
-        result_tuples.sort(key=lambda x: x[0], reverse=True)
+        result_tuples.sort(key=lambda x: x[0])
 
         sections = []
         for result_timestamp, filename, result in result_tuples:
