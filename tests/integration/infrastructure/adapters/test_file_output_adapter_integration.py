@@ -46,8 +46,8 @@ def output_adapter(config_adapter):
 @pytest.fixture
 def sample_audio_files():
     return [
-        AudioFile(path=Path("/path/to/audio/sample1.mp3"), timestamp=datetime.now()),
-        AudioFile(path=Path("/path/to/audio/sample2.mp3"), timestamp=datetime.now())
+        AudioFile(path=Path("/path/to/audio/sample1.mp3"), timestamp=None),
+        AudioFile(path=Path("/path/to/audio/sample2.mp3"), timestamp=None)
     ]
 
 

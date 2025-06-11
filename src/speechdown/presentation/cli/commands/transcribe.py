@@ -7,8 +7,7 @@ from speechdown.infrastructure.adapters.config_adapter import ConfigAdapter
 from speechdown.infrastructure.adapters.file_output_adapter import FileOutputAdapter
 from speechdown.infrastructure.adapters.whisper_transcriber_adapter import WhisperTranscriberAdapter
 from speechdown.infrastructure.adapters.whisper_model_adapter import WhisperModelAdapter
-
-__all__ = ["transcribe"]
+from speechdown.infrastructure.adapters.file_timestamp_adapter import FileTimestampAdapter
 from speechdown.infrastructure.adapters.repository_adapter import SQLiteRepositoryAdapter
 from speechdown.application.services.transcription_service import TranscriptionService
 from speechdown.presentation.cli.commands.common import SpeechDownPaths
@@ -29,12 +28,15 @@ def transcribe(directory: Path, dry_run: bool, ignore_existing: bool) -> int:
     try:
         speechdown_paths = SpeechDownPaths.from_working_directory(directory)
 
-        audio_file_adapter = AudioFileAdapter()
+        # Create timestamp adapter
+        timestamp_adapter = FileTimestampAdapter()
+        
+        audio_file_adapter = AudioFileAdapter(timestamp_port=timestamp_adapter)
         config_adapter = ConfigAdapter.load_config_from_path(speechdown_paths.config)
         config_adapter.set_default_output_dir_if_not_set()
-        config_adapter.set_default_model_name_if_not_set() # Ensure model_name is set
+        config_adapter.set_default_model_name_if_not_set()
         output_adapter = FileOutputAdapter(config_adapter)
-        repository_adapter = SQLiteRepositoryAdapter(speechdown_paths.db)
+        repository_adapter = SQLiteRepositoryAdapter(speechdown_paths.db, timestamp_port=timestamp_adapter)
 
         # Create model and transcriber
         model_name = config_adapter.get_model_name()
@@ -48,6 +50,7 @@ def transcribe(directory: Path, dry_run: bool, ignore_existing: bool) -> int:
             output_port=output_adapter,
             repository_port=repository_adapter,
             transcriber_port=transcriber_adapter,
+            timestamp_port=timestamp_adapter,
         )
 
         audio_files = transcription_service.collect_audio_files(directory)

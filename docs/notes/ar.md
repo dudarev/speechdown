@@ -1,5 +1,7 @@
 File inspired by [The append-and-review note idea by Andrej Karpathy](https://karpathy.bearblog.dev/the-append-and-review-note/)
 
+- It's okay for some development tasks to be in marketing cycles, and vice versa.
+
 - GOAL: Start using for my daily notes
 
 - GOAL: NEXT: Make usable by others

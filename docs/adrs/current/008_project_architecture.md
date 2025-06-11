@@ -1,7 +1,8 @@
 # ADR 008: Project Architecture
 
 **Date:** 2024-03-08  
-**Status:** Accepted
+**Status:** Accepted  
+**Last Updated:** 2025-06-10
 
 ## Context
 
@@ -47,8 +48,8 @@ src/speechdown/
 
 ### 4. Naming Conventions
 
-* **Ports**: Descriptive names ending in `Port` (e.g., `TranscriptionCachePort`)
-* **Adapters**: Names indicating technology and implemented port, with all adapters consistently ending in `Adapter` (e.g., `FileSystemTranscriptionCacheAdapter`, `WhisperTranscriberAdapter`)
+* **Ports**: Descriptive names ending in `Port` (e.g., `TranscriptionCachePort`, `TimestampPort`)
+* **Adapters**: Names indicating technology and implemented port, with all adapters consistently ending in `Adapter` (e.g., `FileSystemTranscriptionCacheAdapter`, `WhisperTranscriberAdapter`, `FileTimestampAdapter`)
 * **Domain Entities**: Nouns representing core concepts (e.g., `AudioFile`, `Transcription`)
 * **Value Objects**: Nouns representing immutable data (e.g., `Language`, `TranscriptionMetrics`)
 * **Services**: Names reflecting use cases (e.g., `TranscriptionService`)
@@ -59,6 +60,33 @@ src/speechdown/
 * **Application**: Depends only on domain layer and its own ports
 * **Infrastructure**: Depends on application layer (to implement ports) and domain layer
 * **Presentation**: Depends on application layer
+
+### 6. Protocol-Based Interfaces
+
+All ports should be defined using Python's `Protocol` class to enable structural typing and improve type safety. This approach:
+* Provides better IDE support and static type checking
+* Allows for duck typing while maintaining explicit contracts
+* Enables easier mocking in tests
+* Follows modern Python typing best practices
+
+Example:
+```python
+from typing import Protocol
+from pathlib import Path
+from datetime import datetime
+
+class TimestampPort(Protocol):
+    def get_timestamp(self, path: Path) -> datetime: ...
+```
+
+### 7. Infrastructure Layer Organization
+
+The infrastructure layer is organized into:
+* **adapters/**: Implementations of application ports
+* **database.py**: Database connectivity
+* **schema.py**: Database schema definitions
+
+All concrete implementations should be adapters that implement their corresponding port interfaces to ensure consistency.
 
 ## Consequences
 
@@ -78,3 +106,14 @@ src/speechdown/
 * **Indirection**: Slightly harder code tracing due to abstraction layers
 * **Possible Overhead**: May be excessive for very small projects, though SpeechDown's size justifies this approach
 * **Refactoring Effort**: Need to rename some existing files for consistency
+
+### Additional Considerations (Updated 2025-06-10)
+
+* **Protocol Usage**: Using `Protocol` for all ports provides better type safety and development experience
+* **Consistent Adapter Pattern**: All infrastructure implementations should be adapters that implement ports, avoiding separate "service" concepts in the infrastructure layer
+* **Dependency Injection**: All dependencies should be explicitly injected rather than using default factories, ensuring testability and flexibility
+
+### Technical Debt Identified
+
+1. **Naming Improvements**: 
+   - Some adapters have TODO comments suggesting naming improvements (e.g., `AudioFileAdapter`)

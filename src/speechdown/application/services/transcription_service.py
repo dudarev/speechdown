@@ -9,6 +9,7 @@ from speechdown.domain.entities import AudioFile, TranscriptionResult
 from speechdown.application.ports.transcriber_port import TranscriberPort
 from speechdown.application.ports.transcription_repository_port import TranscriptionRepositoryPort
 from speechdown.application.ports.config_port import ConfigPort
+from speechdown.application.ports.timestamp_port import TimestampPort
 
 logger = logging.getLogger(__name__)
 
@@ -20,6 +21,7 @@ class TranscriptionService:
     output_port: OutputPort
     repository_port: TranscriptionRepositoryPort
     transcriber_port: TranscriberPort
+    timestamp_port: TimestampPort
 
     def collect_audio_files(self, directory: Path) -> List[AudioFile]:
         logger.debug(f"Collecting audio files from directory: {directory}")
@@ -72,7 +74,7 @@ class TranscriptionService:
 
     def get_file_timestamp(self, path: Path) -> datetime:
         logger.debug(f"Getting timestamp for file: {path}")
-        timestamp = datetime.fromtimestamp(path.stat().st_mtime)
+        timestamp = self.timestamp_port.get_timestamp(path)
         logger.debug(f"File timestamp: {timestamp}")
         return timestamp
 

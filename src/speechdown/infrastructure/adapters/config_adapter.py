@@ -65,11 +65,13 @@ class ConfigAdapter(ConfigPort):
     def _save_config(self) -> None:
         """Save current configuration to the config file."""
         with self.path.open("w") as file:
-            config_data: dict[str, list[str] | str] = {
+            config_data: dict[str, list[str] | str | int | bool] = {
                 "languages": [language.code for language in self.languages],
             }
             if self.output_dir is not None:
-                output_dir_str = str(self.output_dir) if isinstance(self.output_dir, Path) else self.output_dir
+                output_dir_str = (
+                    str(self.output_dir) if isinstance(self.output_dir, Path) else self.output_dir
+                )
                 config_data["output_dir"] = output_dir_str
             if self.model_name is not None:
                 config_data["model_name"] = self.model_name
@@ -81,10 +83,22 @@ class ConfigAdapter(ConfigPort):
             raise FileNotFoundError(f"Config file not found at {path}")
         if create:
             with path.open("w") as file:
-                json.dump({"languages": [], "output_dir": DEFAULT_OUTPUT_DIR, "model_name": DEFAULT_MODEL_NAME}, file)
+                json.dump(
+                    {
+                        "languages": [],
+                        "output_dir": DEFAULT_OUTPUT_DIR,
+                        "model_name": DEFAULT_MODEL_NAME,
+                    },
+                    file,
+                )
         with path.open("r") as file:
             config_data = json.load(file)
         languages = [Language(language) for language in config_data.get("languages", [])]
         output_dir = config_data.get("output_dir")
         model_name = config_data.get("model_name")
-        return cls(languages=languages, path=path, output_dir=output_dir, model_name=model_name)
+        return cls(
+            languages=languages,
+            path=path,
+            output_dir=output_dir,
+            model_name=model_name,
+        )
