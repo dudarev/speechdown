@@ -1,5 +1,12 @@
 File inspired by [The append-and-review note idea by Andrej Karpathy](https://karpathy.bearblog.dev/the-append-and-review-note/)
 
+- What --debug option is for? Is it really needed?
+
+- `transcribe` command should be optional, if it's not specified it should be assumed
+
+- At some point create a config option to sort by chronological or reverse chronological order
+  - Later this should be configured on file level via front matter
+
 - It's okay for some development tasks to be in marketing cycles, and vice versa.
 
 - GOAL: Start using for my daily notes

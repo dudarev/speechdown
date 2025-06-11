@@ -323,7 +323,7 @@ class Config:
 #### 7. Test File Modifications
 **Files to Rename:**
 - `tests/data/subfolder/test-1.m4a` → `tests/data/subfolder/test-1_20240315_143022.m4a`
-- `tests/data/test-2.m4a` → `tests/data/test-2_20240316_101530.m4a`
+- `tests/data/test-2.m4a` → `tests/data/test-2 20240316 101530.m4a`
 - Keep `tests/data/test-ru.m4a` and `tests/data/test-ua.m4a` unchanged
 
 **Test Files to Update:**
@@ -369,7 +369,7 @@ class Config:
   - Integration test: process test audio files and verify timestamp extraction works correctly.
   - **Test File Updates Required:**
     - Rename `test-1.m4a` → `test-1_20240315_143022.m4a` (subfolder test file)
-    - Rename `test-2.m4a` → `test-2_20240316_101530.m4a` (main folder test file)
+    - Rename `test-2.m4a` → `test-2 20240316 101530.m4a` (main folder test file)
     - Keep `test-ru.m4a` and `test-ua.m4a` unchanged to test fallback to modification time
     - Update corresponding test assertions to validate extracted timestamps vs. modification time fallback
   - Verify no existing functionality is broken, especially around file handling and timestamp usage.
