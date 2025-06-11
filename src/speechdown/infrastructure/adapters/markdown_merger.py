@@ -1,5 +1,3 @@
-\
-# src/speechdown/infrastructure/adapters/markdown_merger.py
 import re
 
 class MarkdownMerger:

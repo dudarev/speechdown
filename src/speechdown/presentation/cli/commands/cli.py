@@ -28,14 +28,15 @@ def cli() -> int:
     subparsers = parser.add_subparsers(dest="command")
     add_debug_argument(parser)
 
-    parser_init = subparsers.add_parser("init", help="Initialize the speechdown project")
+    parser_init = subparsers.add_parser("init", help="Initialize a SpeechDown project")
     add_common_arguments(parser_init)
+    
+    parser_config = subparsers.add_parser("config", help="Configure the SpeechDown project")
+    add_common_arguments(parser_config)
 
     parser_transcribe = subparsers.add_parser("transcribe", help="Transcribe audio files")
     add_transcribe_arguments(parser_transcribe)
-    
-    parser_config = subparsers.add_parser("config", help="Configure the speechdown project")
-    add_common_arguments(parser_config)
+
     parser_config.add_argument(
         "--output-dir", 
         type=str, 
