@@ -36,9 +36,9 @@ graph LR
     P6 --> A6
     P7 --> A7
 
-    %% Dependencies between adapters
-    A1 -.-> A7
-    A6 -.-> A7
+    %% Dependencies between adapters (all via dependency injection)
+    A1 --> A7
+    A6 --> A7
     A3 --> A2
 
     classDef portStyle fill:#e1f5fe,stroke:#01579b,stroke-width:2px
@@ -76,10 +76,12 @@ graph LR
 The diagram shows several types of relationships:
 
 1. **Port Implementation** (solid arrows): Each adapter implements its corresponding port interface
-2. **Adapter Dependencies** (dotted arrows): Some adapters depend on other adapters:
-   - `AudioFileAdapter` depends on `FileTimestampAdapter` for timestamp extraction
-   - `SQLiteRepositoryAdapter` depends on `FileTimestampAdapter` for file timestamp operations
-   - `FileOutputAdapter` depends on `ConfigAdapter` for output configuration
+2. **Adapter Dependencies** (solid arrows): All adapter dependencies are implemented through dependency injection:
+   - `AudioFileAdapter` receives `FileTimestampAdapter` through constructor injection
+   - `SQLiteRepositoryAdapter` receives `FileTimestampAdapter` through constructor injection  
+   - `FileOutputAdapter` receives `ConfigAdapter` through constructor injection
+
+All inter-adapter dependencies in this codebase follow the dependency injection pattern, where dependencies are provided through constructors rather than being created internally. This ensures better testability, flexibility, and adherence to the dependency inversion principle.
 
 ## Key Architectural Benefits
 

@@ -1,6 +1,6 @@
 import logging
 import os
-import datetime  # Changed import
+import datetime
 from pathlib import Path
 from typing import Dict, List
 
@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 class FileOutputAdapter(OutputPort):
     def __init__(self, config_port: ConfigPort):
         self.config_port = config_port
-        self.markdown_merger = MarkdownMerger()  # Initialize the merger
+        self.markdown_merger = MarkdownMerger()
 
     def output_transcription_results(
         self,
@@ -60,7 +60,11 @@ class FileOutputAdapter(OutputPort):
         # Process each date and write to corresponding file
         for transcription_date, results in date_to_transcriptions.items():
             file_path = output_dir / self._generate_file_name(transcription_date)
-            self._write_to_file(file_path, results, timestamp)
+            self._write_to_file(
+                file_path=file_path,
+                results=results,
+                timestamp=timestamp,
+            )
 
     def _get_output_directory(self, path: Path | None) -> Path | None:
         """Get the output directory from the config or use the provided path."""
@@ -116,6 +120,7 @@ class FileOutputAdapter(OutputPort):
 
     def _write_to_file(
         self,
+        *,
         file_path: Path,
         results: list[TranscriptionResult],
         timestamp: datetime.datetime | None = None,

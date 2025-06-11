@@ -5,6 +5,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional, Dict
 
+from speechdown.application.ports.timestamp_port import TimestampPort
+
 
 TIMESTAMP_PATTERNS = [
     {
@@ -34,14 +36,14 @@ VALID_YEAR_RANGE = (2000, 2099)
 
 
 @dataclass
-class FileTimestampAdapter:
+class FileTimestampAdapter(TimestampPort):
     """Adapter for extracting timestamps from filenames with fallbacks."""
 
     def get_timestamp(self, path: Path) -> datetime:
         """Return timestamp extracted from filename or fallback to file mtime."""
         logger = logging.getLogger(__name__)
 
-        extracted = self.extract_from_filename(path.name)
+        extracted = self._extract_from_filename(path.name)
         if extracted:
             logger.debug("Extracted timestamp from filename %s: %s", path.name, extracted)
             return extracted
@@ -50,7 +52,7 @@ class FileTimestampAdapter:
         logger.debug("Using fallback modification time for %s: %s", path.name, fallback)
         return fallback
 
-    def extract_from_filename(self, filename: str) -> Optional[datetime]:
+    def _extract_from_filename(self, filename: str) -> Optional[datetime]:
         """Extract a timestamp from the filename using backwards search."""
         for config in TIMESTAMP_PATTERNS:
             pattern: re.Pattern[str] = config["regex"]  # type: ignore[assignment]
