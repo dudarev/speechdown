@@ -8,6 +8,12 @@ See [ADR 013](docs/adrs/current/013_use_changelog.md) for more details on the ch
 
 ## [Unreleased]
 
+## [0.2.1] - 2025-06-12
+
+### Fixed
+
+- Use audio file modification time instead of timestamp for `--within-hours`
+
 ## [0.2.0] - 2025-06-12
 
 ### Added

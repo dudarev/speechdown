@@ -33,7 +33,7 @@ class AudioFileAdapter(AudioFilePort):
                 path.is_file()
                 and path.suffix.lower() in SOUND_EXTENSIONS
                 and not path.stem.startswith(".")
-                and self._is_between(start_dt, end_dt, self._get_file_timestamp(path))
+                and self._is_modified_between(start_dt, end_dt, path)
             ):
                 audio_files.append(self.get_audio_file(path))
         return audio_files
@@ -41,13 +41,15 @@ class AudioFileAdapter(AudioFilePort):
     def _get_file_timestamp(self, path: Path) -> datetime:
         return self.timestamp_port.get_timestamp(path)
 
-    def _is_between(
-        self, start_dt: datetime | None, end_dt: datetime | None, timestamp: datetime
+    def _is_modified_between(
+        self, start_dt: datetime | None, end_dt: datetime | None, path: Path
     ) -> bool:
+        mod_time = datetime.fromtimestamp(path.stat().st_mtime)
+
         if start_dt is None and end_dt is None:
             return True
         if start_dt is None and end_dt is not None:
-            return timestamp <= end_dt
+            return mod_time <= end_dt
         if end_dt is None and start_dt is not None:
-            return start_dt <= timestamp
-        return start_dt <= timestamp <= end_dt  # type: ignore[operator]
+            return start_dt <= mod_time
+        return start_dt <= mod_time <= end_dt  # type: ignore[operator]
