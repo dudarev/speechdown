@@ -23,9 +23,18 @@ class TranscriptionService:
     transcriber_port: TranscriberPort
     timestamp_port: TimestampPort
 
-    def collect_audio_files(self, directory: Path) -> List[AudioFile]:
-        logger.debug(f"Collecting audio files from directory: {directory}")
-        audio_files = self.audio_file_port.collect_audio_files(directory)
+    def collect_audio_files(
+        self,
+        directory: Path,
+        start_dt: datetime | None = None,
+        end_dt: datetime | None = None,
+    ) -> List[AudioFile]:
+        logger.debug(
+            f"Collecting audio files from directory: {directory} between {start_dt} and {end_dt}"
+        )
+        audio_files = self.audio_file_port.collect_audio_files(
+            directory, start_dt=start_dt, end_dt=end_dt
+        )
         logger.debug(f"Found {len(audio_files)} audio files")
         return audio_files
 

@@ -1,4 +1,7 @@
-import whisper  # type: ignore
+try:  # pragma: no cover - optional dependency may not be installed in tests
+    import whisper  # type: ignore
+except ModuleNotFoundError:  # pragma: no cover - handled in __init__
+    whisper = None  # type: ignore
 from typing import Dict, Any, Optional, Union
 from pathlib import Path
 
@@ -17,6 +20,8 @@ class WhisperModelAdapter(TranscriptionModelPort):
         Args:
             model_name: Name of Whisper model to load ("tiny", "base", "small", "medium", "large", "turbo")
         """
+        if whisper is None:
+            raise ImportError("openai-whisper is required for transcription but is not installed")
         self._model_name = model_name
         self._model = whisper.load_model(model_name)
 

@@ -103,6 +103,7 @@ This will transcribe all supported audio files found in the current directory an
 
 - `--debug`: Enable debug mode for more verbose output.
 - `--dry-run`: Simulate the transcription process without making any changes to the database or file system.
+- `--within-hours`: Only transcribe files modified within the last N hours.
 
 #### Directory Option
 
