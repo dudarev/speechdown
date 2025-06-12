@@ -4,10 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+See [ADR 013](docs/adrs/current/013_use_changelog.md) for more details on the changelog usage.
+
 ## [Unreleased]
 
 ## [0.1.0] - 2025-06-11
+
 ### Added
+
 - Command line interface with `init`, `config` and `transcribe` commands.
 - Automatic language detection for audio files.
 - Storage of transcriptions in a SQLite database.
