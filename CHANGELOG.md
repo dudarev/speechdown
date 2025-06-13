@@ -8,6 +8,13 @@ See [ADR 013](docs/adrs/current/013_use_changelog.md) for more details on the ch
 
 ## [Unreleased]
 
+## [0.2.4] - 2025-06-13
+
+### Fixed
+
+- Fix CLI entry point by properly exposing `cli` function at module level in `main.py`
+- Add `main()` function as alternative entry point for better compatibility
+
 ## [0.2.3] - 2025-06-13
 
 ### Fixed
