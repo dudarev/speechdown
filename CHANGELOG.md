@@ -8,6 +8,13 @@ See [ADR 013](docs/adrs/current/013_use_changelog.md) for more details on the ch
 
 ## [Unreleased]
 
+## [0.2.5] - 2025-06-13
+
+### Fixed
+
+- Fix Hatch build configuration to properly include all package files in wheel distribution
+- Correct conflicting build configuration that was causing empty wheel packages
+
 ## [0.2.4] - 2025-06-13
 
 ### Fixed
