@@ -8,6 +8,12 @@ See [ADR 013](docs/adrs/current/013_use_changelog.md) for more details on the ch
 
 ## [Unreleased]
 
+## [0.2.2] - 2025-06-13
+
+### Fixed
+
+- Add missing `__init__.py` file in `speechdown/presentation/` directory to fix `ModuleNotFoundError` when package is installed via pipx
+
 ## [0.2.1] - 2025-06-12
 
 ### Fixed
