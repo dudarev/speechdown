@@ -112,7 +112,7 @@ touch "$LOCK_FILE"
 cleanup() {
     rm -f "$LOCK_FILE"
 }
-trap cleanup EXIT
+trap cleanup EXIT SIGINT SIGTERM
 
 log_with_timestamp "Starting SpeechDown automation"
 
@@ -193,13 +193,13 @@ crontab -e
 
 ```bash
 # Every 10 minutes
-*/10 * * * * /Users/YOUR_USERNAME/bin/sd_voice_notes.sh 2>&1 >> /Users/YOUR_USERNAME/logs/sd_voice_notes.log
+*/10 * * * * /Users/YOUR_USERNAME/bin/sd_voice_notes.sh >> /Users/YOUR_USERNAME/logs/sd_voice_notes.log 2>&1
 
 # Every 15 minutes
-*/15 * * * * /Users/YOUR_USERNAME/bin/sd_voice_notes.sh 2>&1 >> /Users/YOUR_USERNAME/logs/sd_voice_notes.log
+*/15 * * * * /Users/YOUR_USERNAME/bin/sd_voice_notes.sh >> /Users/YOUR_USERNAME/logs/sd_voice_notes.log 2>&1
 
 # Every hour
-0 * * * * /Users/YOUR_USERNAME/bin/sd_voice_notes.sh 2>&1 >> /Users/YOUR_USERNAME/logs/sd_voice_notes.log
+0 * * * * /Users/YOUR_USERNAME/bin/sd_voice_notes.sh >> /Users/YOUR_USERNAME/logs/sd_voice_notes.log 2>&1
 ```
 
 **Alternative**: You can also set the cron entry with your actual username:
