@@ -8,6 +8,14 @@ See [ADR 013](docs/adrs/current/013_use_changelog.md) for more details on the ch
 
 ## [Unreleased]
 
+## [0.2.3] - 2025-06-13
+
+### Fixed
+
+- Fix package installation by adding missing `__init__.py` files throughout the package structure
+- Switch from setuptools to Hatch build system for better package discovery and more reliable builds
+- Ensure all subpackages (application, domain, infrastructure, presentation) are properly included in wheel distribution
+
 ## [0.2.2] - 2025-06-13
 
 ### Fixed
