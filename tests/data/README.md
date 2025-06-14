@@ -11,7 +11,7 @@ data/
 ├── subfolder/
 │   ├── test-1_20240315_143022.m4a - English: "Test 1"
 ├── README.md
-├── test-2_20240316_101530.m4a - English: "Test 2"
+├── test-2 20240316 101530.m4a - English: "Test 2"
 ├── test-ru.m4a - Russian: "Заметка по-русски"
 ├── test-ua.m4a - Ukrainian: "Запис українською"
 ```
