@@ -1,5 +1,11 @@
 File inspired by [The append-and-review note idea by Andrej Karpathy](https://karpathy.bearblog.dev/the-append-and-review-note/)
 
+- potentially try https://www.coderabbit.ai/
+
+- modify `configure_logging` function to have only message for info, without file and level etc.
+
+- rename 2025-06-03-copilot-jules-claude-rules.md to ...-ai-assistant-rules.md
+
 - What --debug option is for? Is it really needed?
 
 - `transcribe` command should be optional, if it's not specified it should be assumed
