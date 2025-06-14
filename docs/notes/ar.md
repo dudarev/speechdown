@@ -3,6 +3,12 @@ File inspired by [The append-and-review note idea by Andrej Karpathy](https://ka
 - Consider removing integration tests from `make ci` again since they need ffmpeg and it takes time to install. Potentially `make ci` can only check unit tests. They were not part of CI at some point.
   - Especially since those tests that use whisper are marked as `integration` and `slow`. This marks are disabled in `conftest.py`.
 
+- potentially try https://www.coderabbit.ai/
+
+- modify `configure_logging` function to have only message for info, without file and level etc.
+
+- rename 2025-06-03-copilot-jules-claude-rules.md to ...-ai-assistant-rules.md
+
 - What --debug option is for? Is it really needed?
 
 - `transcribe` command should be optional, if it's not specified it should be assumed

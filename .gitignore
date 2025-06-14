@@ -8,6 +8,10 @@
 *.egg-info
 requirements.txt
 .coverage*
+*.whl
+*.gz
+dist/
+build/
 
 # pyenv
 .python-version

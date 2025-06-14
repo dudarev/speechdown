@@ -1,4 +1,5 @@
 """Transcribe command handler for speechdown CLI."""
+
 from pathlib import Path
 import logging
 
@@ -13,7 +14,15 @@ from speechdown.application.services.transcription_service import TranscriptionS
 from speechdown.presentation.cli.commands.common import SpeechDownPaths
 
 
-def transcribe(directory: Path, dry_run: bool, ignore_existing: bool) -> int:
+from datetime import datetime, timedelta
+
+
+def transcribe(
+    directory: Path,
+    dry_run: bool,
+    ignore_existing: bool,
+    within_hours: float | None = None,
+) -> int:
     """
     Transcribe audio files in the specified directory.
 
@@ -21,6 +30,7 @@ def transcribe(directory: Path, dry_run: bool, ignore_existing: bool) -> int:
         directory: The directory containing audio files
         dry_run: Whether to perform a dry run without saving to database
         ignore_existing: Whether to ignore existing transcriptions and perform new ones
+        within_hours: If set, only transcribe files modified within this many hours
 
     Returns:
         Exit code (0 for success)
@@ -30,18 +40,20 @@ def transcribe(directory: Path, dry_run: bool, ignore_existing: bool) -> int:
 
         # Create timestamp adapter
         timestamp_adapter = FileTimestampAdapter()
-        
+
         audio_file_adapter = AudioFileAdapter(timestamp_port=timestamp_adapter)
         config_adapter = ConfigAdapter.load_config_from_path(speechdown_paths.config)
         config_adapter.set_default_output_dir_if_not_set()
         config_adapter.set_default_model_name_if_not_set()
         output_adapter = FileOutputAdapter(config_adapter)
-        repository_adapter = SQLiteRepositoryAdapter(speechdown_paths.db, timestamp_port=timestamp_adapter)
+        repository_adapter = SQLiteRepositoryAdapter(
+            speechdown_paths.db, timestamp_port=timestamp_adapter
+        )
 
         # Create model and transcriber
         model_name = config_adapter.get_model_name()
         # model_name is guaranteed to be set by set_default_model_name_if_not_set.
-        whisper_model = WhisperModelAdapter(model_name=model_name) 
+        whisper_model = WhisperModelAdapter(model_name=model_name)
         transcriber_adapter = WhisperTranscriberAdapter(whisper_model)
 
         transcription_service = TranscriptionService(
@@ -53,7 +65,11 @@ def transcribe(directory: Path, dry_run: bool, ignore_existing: bool) -> int:
             timestamp_port=timestamp_adapter,
         )
 
-        audio_files = transcription_service.collect_audio_files(directory)
+        start_dt = None
+        if within_hours is not None:
+            start_dt = datetime.now() - timedelta(hours=within_hours)
+
+        audio_files = transcription_service.collect_audio_files(directory, start_dt=start_dt)
         transcriptions = transcription_service.transcribe_audio_files(
             audio_files, ignore_existing=ignore_existing
         )

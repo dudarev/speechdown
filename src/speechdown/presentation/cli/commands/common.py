@@ -1,11 +1,17 @@
 """Common utilities and data structures for CLI commands."""
+
 from dataclasses import dataclass
 import logging
 from pathlib import Path
 import argparse
 
-__all__ = ["configure_logging", "SpeechDownPaths", "add_debug_argument", 
-          "add_common_arguments", "add_transcribe_arguments"]
+__all__ = [
+    "configure_logging",
+    "SpeechDownPaths",
+    "add_debug_argument",
+    "add_common_arguments",
+    "add_transcribe_arguments",
+]
 
 
 def configure_logging(debug_mode: bool) -> None:
@@ -71,4 +77,9 @@ def add_transcribe_arguments(parser: argparse.ArgumentParser) -> None:
         "--ignore-existing",
         action="store_true",
         help="Ignore existing transcriptions and perform new ones",
+    )
+    parser.add_argument(
+        "--within-hours",
+        type=float,
+        help="Only transcribe files modified within the last N hours",
     )
