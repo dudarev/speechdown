@@ -230,7 +230,7 @@ In essence, OpenAI Codex and Anthropic Claude offer the most **forceful complian
             - All new code requires comprehensive tests.
 
             ### Coding Style & Quality
-            - Python version >=3.12. Use f-strings and type hints.
+            - Python version >=3.11. Use f-strings and type hints.
             - Linting: `ruff` with a 100-character line length. Run `make lint` to check.
             - Type Checking: `mypy --strict`. Run `make mypy` to check.
             - All CI checks (`make ci`) must pass.

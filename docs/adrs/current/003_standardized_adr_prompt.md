@@ -2,6 +2,7 @@
 
 **Date:** 2025-03-02  
 **Status:** Accepted
+**Related ADRs:** [ADR 001](001_adrs_process.md).
 
 ## Context
 
