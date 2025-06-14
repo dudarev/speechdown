@@ -8,6 +8,34 @@ See [ADR 013](docs/adrs/current/013_use_changelog.md) for more details on the ch
 
 ## [Unreleased]
 
+## [0.2.5] - 2025-06-13
+
+### Fixed
+
+- Fix Hatch build configuration to properly include all package files in wheel distribution
+- Correct conflicting build configuration that was causing empty wheel packages
+
+## [0.2.4] - 2025-06-13
+
+### Fixed
+
+- Fix CLI entry point by properly exposing `cli` function at module level in `main.py`
+- Add `main()` function as alternative entry point for better compatibility
+
+## [0.2.3] - 2025-06-13
+
+### Fixed
+
+- Fix package installation by adding missing `__init__.py` files throughout the package structure
+- Switch from setuptools to Hatch build system for better package discovery and more reliable builds
+- Ensure all subpackages (application, domain, infrastructure, presentation) are properly included in wheel distribution
+
+## [0.2.2] - 2025-06-13
+
+### Fixed
+
+- Add missing `__init__.py` file in `speechdown/presentation/` directory to fix `ModuleNotFoundError` when package is installed via pipx
+
 ## [0.2.1] - 2025-06-12
 
 ### Fixed

@@ -1,10 +1,10 @@
 [build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
 name = "speechdown"
-version = "0.1.0"
+version = "0.2.5"
 description = "A CLI tool for transcribing audio files in multiple languages."
 authors = [{ name = "Artem Dudarev", email = "dudarev@gmail.com" }]
 requires-python = ">=3.12"
@@ -22,6 +22,5 @@ testing = ["pytest", "ruff", "mypy", "pytest-cov", "python-dotenv",]
 line-length = 100
 fix = true
 
-[tool.setuptools]
-packages = ["speechdown"]
-package-dir = { "" = "src" }
+[tool.hatch.build.targets.wheel]
+sources = ["src"]
