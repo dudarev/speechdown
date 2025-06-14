@@ -77,3 +77,9 @@ list-tables:
 
 coverage-view:
 	open coverage_html/index.html
+
+.PHONY: generate-ai-rules
+generate-ai-rules:
+	@echo "Generating AI assistant rule files from master AI-rules.md..."
+	@python scripts/generate_ai_rules.py docs/ai/AI-rules.md
+	@echo "AI rule files generated successfully."
