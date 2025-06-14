@@ -38,7 +38,7 @@
 - Use naming convention: `test_<source_file_name>.py` for standard tests.
 
 ### Coding Standards & Security
-- Use Python 3.12+ syntax with type hints and f-strings.
+- Use Python 3.11+ syntax with type hints and f-strings.
 - Ensure PEP8 compliance; use `make format` and `make lint` for code formatting and linting.
 - Use `make mypy` for type checking.
 - Run `make ci` before completing feature development to ensure all checks pass.
