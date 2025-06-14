@@ -2,6 +2,7 @@
 
 **Date:** 2025-03-02  
 **Status:** Accepted
+**Related ADRs:** [ADR 003](003_standardized_adr_prompt.md)
 
 ## Context
 

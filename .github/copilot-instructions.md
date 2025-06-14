@@ -1,6 +1,9 @@
 # Master AI Rules for SpeechDown
 
+
 ## Common Guidelines for All AI Assistants
+
+**Note:** For detailed architectural decisions and rationale, refer as needed to the [current ADRs](../../adrs/current/) listed below. These records provide essential context and guidance for all guidelines in this document.
 
 ### Architecture (ADR 008)
 - Follow Domain-Driven Design with four layers: **domain**, **application**, **infrastructure**, **presentation**.
@@ -14,21 +17,28 @@
 - Interfaces end with `Port` (e.g., `TranscriptionPort`).
 - Implementations end with `Adapter` (e.g., `WhisperTranscriberAdapter`).
 - Service classes end with `Service`.
+- Prefer `Service` classes in the application layer for orchestrating use cases.
+- Prefer `Adapter` classes in the infrastructure layer for implementing ports.
 
-### Testing Requirements (ADR 004)
+### Testing Requirements (ADRs 002, 004, 005)
 - All new code must include unit tests using **pytest**.
 - Prefer function-based tests.
 - Use the Arrange-Act-Assert (AAA) pattern.
 - Place unit tests under `tests/unit/` and integration tests under `tests/integration/`.
+- Mirror the `src` directory structure in test directories.
+- Use naming convention: `test_<source_file_name>.py` for standard tests.
 
 ### Coding Standards & Security
 - Use Python 3.12+ syntax with type hints and f-strings.
-- Ensure PEP8 compliance; lint with `ruff` and type-check with `mypy --strict`.
+- Ensure PEP8 compliance; use `make format` and `make lint` for code formatting and linting.
+- Use `make mypy` for type checking.
+- Run `make ci` before completing feature development to ensure all checks pass.
 - Never commit credentials or secrets.
 
-### Documentation
+### Documentation (ADR 010)
 - Significant features should have a design doc in `docs/design/current/`.
 - Record architectural decisions as ADRs in `docs/adrs/current/`.
+- Use format `YYYY-MM-DD-feature-name.md` for design documents.
 
 ## GitHub Copilot Specific Instructions
 - Copilot Chat and code completion should respect SpeechDown's layered architecture and naming conventions.

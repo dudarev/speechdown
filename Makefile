@@ -1,4 +1,4 @@
-.PHONY: format lint test test-integration test-all mypy ci init run validate requirements-install requirements-update list-sql coverage-view check-ffmpeg install-dev
+.PHONY: ai-rules check-ffmpeg ci ci-full coverage-view debug debug-ignore-existing format init install-dev lint list-sql list-tables mypy requirements requirements-update reset run test test-all test-integration validate
 
 clean:
 	rm -rf tests/data/transcripts
@@ -8,8 +8,13 @@ clean:
 
 check-ffmpeg:
 	@if ! command -v ffmpeg > /dev/null 2>&1; then \
-		echo "ffmpeg not found. Installing via Homebrew..."; \
-		brew install ffmpeg; \
+		if [[ "$$(uname)" == "Darwin" ]]; then \
+			echo "ffmpeg not found. Installing via Homebrew..."; \
+			brew install ffmpeg; \
+		else \
+			echo "ffmpeg not found. Please install ffmpeg for your system."; \
+			exit 1; \
+		fi; \
 	else \
 		echo "ffmpeg is already installed."; \
 	fi
@@ -18,8 +23,12 @@ requirements: check-ffmpeg
 	pip install uv
 	uv pip install -e '.[testing]'
 
+requirements-local:
+	uv pip install -e '.[testing-local]'
+	@echo "Local development environment set up with dependencies"
+
 requirements-update:
-	uv pip install -U -e '.[testing]'
+	uv pip install -U -e '.[testing-local]'
 	@echo "Dependencies updated to latest versions"
 
 
@@ -37,7 +46,7 @@ mypy:
 	mypy src/speechdown
 
 test:
-	pytest tests/unit --cov=src/speechdown --cov-report term --cov-report html:coverage_html
+	pytest tests/unit
 
 test-integration:
 	python -m pytest tests/integration -v --run-integration --run-slow
@@ -45,9 +54,11 @@ test-integration:
 test-all:
 	python -m pytest tests -v --run-integration --run-slow --cov=src/speechdown --cov-report term --cov-report html:coverage_html
 
-ci: lint mypy test
+# Used in GitHub CI and for remote AI assistants
+ci: lint mypy test test-integration
 
-ci-full: lint mypy test-all
+# Used in local CI and for local AI assistants
+ci-local: lint mypy test-all
 
 
 # Development
@@ -78,8 +89,9 @@ list-tables:
 coverage-view:
 	open coverage_html/index.html
 
-.PHONY: generate-ai-rules
-generate-ai-rules:
+# AI Assistants
+
+ai-rules:
 	@echo "Generating AI assistant rule files from master AI-rules.md..."
 	@python scripts/generate_ai_rules.py docs/ai/AI-rules.md
 	@echo "AI rule files generated successfully."
