@@ -24,7 +24,7 @@ The Whisper integration tests use actual Whisper models to transcribe audio file
 
 1. These tests are marked as `@pytest.mark.integration` and `@pytest.mark.slow`
 2. By default, they will be skipped unless explicitly enabled
-3. They require an actual audio file in the `tests/data/audio_files` directory
+3. They require an actual audio files in the `tests/data/` directory
 
 ## Adding New Integration Tests
 

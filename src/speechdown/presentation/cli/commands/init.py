@@ -32,7 +32,7 @@ def init(directory: Path) -> int:
 
         if not speechdown_paths.db.exists():
             initialize_database(speechdown_paths.db, SCHEMA)
-            print(f"Initialized speech-down project in {directory}")
+            print(f"Initialized SpeechDown project in {directory}")
         else:
             print("Database already exists. Initialization skipped.")
 
