@@ -26,6 +26,7 @@ class SQLiteRepositoryAdapter(TranscriptionRepositoryPort):
 
     def create_transcription_table(self) -> None:
         """Create the transcription table if it doesn't exist."""
+        conn: sqlite3.Connection | None = None
         try:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
@@ -55,6 +56,7 @@ class SQLiteRepositoryAdapter(TranscriptionRepositoryPort):
             logger.debug("Skipping CachedTranscription - no metrics to save")
             return
 
+        conn: sqlite3.Connection | None = None
         try:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
@@ -108,6 +110,7 @@ class SQLiteRepositoryAdapter(TranscriptionRepositoryPort):
         """
         transcriptions = []
 
+        conn: sqlite3.Connection | None = None
         try:
             conn = sqlite3.connect(self.db_path)
             conn.row_factory = sqlite3.Row  # Enable row factory for named columns
@@ -173,6 +176,7 @@ class SQLiteRepositoryAdapter(TranscriptionRepositoryPort):
         Returns:
             The best Transcription if available, otherwise None
         """
+        conn: sqlite3.Connection | None = None
         try:
             conn = sqlite3.connect(self.db_path)
             conn.row_factory = sqlite3.Row
