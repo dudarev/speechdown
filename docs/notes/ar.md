@@ -1,5 +1,8 @@
 File inspired by [The append-and-review note idea by Andrej Karpathy](https://karpathy.bearblog.dev/the-append-and-review-note/)
 
+- Text before h2 level headers should not be affected.
+- Other h2 level headers should not be affected.
+
 - Do not write to output file if nothing changed
 
 - Consider removing integration tests from `make ci` again since they need ffmpeg and it takes time to install. Potentially `make ci` can only check unit tests. They were not part of CI at some point.
@@ -21,22 +24,11 @@ File inspired by [The append-and-review note idea by Andrej Karpathy](https://ka
 
 - It's okay for some development tasks to be in marketing cycles, and vice versa.
 
-- GOAL: Start using for my daily notes
-
 - GOAL: NEXT: Make usable by others
 
 - GOAL: NEXT: Write a blog post about it
 
-- TASK: RESEARCH: how to extract timestamps for audio files in two ways:
-  1. From the filename: Investigate systematic methods to parse timestamps embedded in audio file names.
-  2. From file metadata: Explore how to retrieve creation or recording timestamps from audio file metadata.
-- The goal is to use these extracted timestamps to add accurate time information to markdown files.
-
-- TASK: Start CHANGELOG.md, start `__init__.py` with version.
-
 - TASK: Generate more output when the script is running for informational purposes. This can be controlled by the verbose flag. 
-
-- Keep editing the first line in README.md (see vision.md). Keep editing the README.md file in general.
 
 Organize planning documents (such as ADRs, design, and research) into folders that reflect their status: 
 - `planning` for documents that are in the early planning or idea stage,
@@ -47,8 +39,6 @@ This structure helps track the lifecycle and relevance of each document.
 - I can create a dedicated ADR describing the planning document structure and also update existing ADRs for each document type to reference this structure.
 
 - When creating a design doc and mentioning tests there a reference to existing ADRs should should be made. I need to think where to put this thought either to the ADR about design docs or into the rules for the copilot. 
-
-- By the way, how can I set up the rules for the copilot? 
 
 - When instructing a copilot to create design doc it needs to be mentioned that it should should stop after the design doc created for me to review, edit it and give feedback. With language settings it was able to create the design doc and implement it. it was okay but in general this doesn't look like the right approach.
 

@@ -1,6 +1,6 @@
 # SpeechDown
 
-SpeechDown is a command line tool that transcribes audio files and organizes the results into structured Markdown files.
+CLI tool to transcribe your spoken audio notes into timestamped, multilingual Markdown-—offline, accurate, and feedback-driven.
 
 ## Features
 
@@ -10,19 +10,37 @@ SpeechDown is a command line tool that transcribes audio files and organizes the
 - Output transcriptions to a file or the console.
   - Transcripts can be saved to date-based Markdown files (e.g., `YYYY-MM-DD.md`).
   - Each audio file's transcript is organized into timestamped H2-level sections within the output file.
+
+### Future plans
+
+- Improve quality of transcriptions based on feedback.
 - Accept commands from the Markdown files it generated such as:
-  - re-transcribe
+  - re-transcribe in different language
   - learn correction
 
 ## Installation
 
-Currently SpeechDown is not available as a package yet. You can install it locally for development using:
+### For Development
+
+Install SpeechDown locally for development:
 
 ```bash
 make requirements
 ```
 
-This will install the required dependencies including development tools.
+This installs all required dependencies including development tools.
+
+### For Production Use
+
+Install SpeechDown via [pipx](https://pipx.pypa.io/) for stable automation:
+
+```bash
+# Install SpeechDown from GitHub
+pipx install git+https://github.com/dudarev/speechdown
+
+# Verify installation
+sd --help
+```
 
 ## Usage
 
@@ -40,7 +58,6 @@ This will create a `.speechdown` directory in the current working directory, whi
 **Note:** It is possible to specify a different directory for most commands using the `-d` or `--directory` option, if you want to operate in a directory other than the current working directory. See the Options section below for details.
 
 ### Configuration
-
 
 You can configure the output directory for transcripts using the `sd config` command:
 
@@ -75,7 +92,7 @@ sd config --add-language ja
 sd config --remove-language fr
 ```
 
-The default languages are English (en), Ukrainian (uk). SpeechDown supports all languages available in the Whisper model, including but not limited to:
+SpeechDown supports all languages available in the [Whisper model](https://github.com/openai/whisper), including but not limited to:
 - English (en)
 - French (fr)
 - German (de)
@@ -130,7 +147,7 @@ When changes are pushed to GitHub, a CI pipeline runs the `make ci` command to v
 For local development, it's recommended to run:
 
 ```bash
-make ci-full
+make ci-local
 ```
 
 This command runs all tests, including additional integration tests that aren't included in the standard CI pipeline.

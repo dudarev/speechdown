@@ -6,13 +6,10 @@ Align with [roadmap](docs/planning/roadmap.md) for mid-term planning.
 
 ## In Progress
 
-- Clean-up branches on GitHub https://github.com/dudarev/speechdown
 - TASK: RESEARCH: rules for GitHub copilot, Jules, Claude Code etc.
 - Research: Audio Timestamp Extraction
   - From file names
   - From file metadata
-- If the `-d` (directory) option is not provided when running the CLI, it should default to using the current working directory (the directory from which the command is executed) as the target for processing audio files.
-- Voice notes should be grouped to daily files and the timestamps should be correct at least based on file names. 
 - Collect relevant notes about SpeechDown - ongoing - use [ar](docs/notes/ar.md) notes
 
 ## Nearest Future
