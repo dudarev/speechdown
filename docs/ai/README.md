@@ -6,6 +6,7 @@ This directory contains documentation for AI tools and collaborators used in Spe
 
 - [ChatGPT](https://chatgpt.com/) - Research and analysis
 - [Claude Code](https://www.anthropic.com/claude-code) - Terminal-based coding assistant
+    - Keep an eye on [Cost in Anthropic Console](https://console.anthropic.com/cost) if using it with API
 - [Cursor](https://cursor.sh/) - AI-powered IDE
 - [GitHub Copilot](https://github.com/features/copilot) - VS Code integration
 - [Google Jules](https://jules.google/) - Autonomous coding tasks
