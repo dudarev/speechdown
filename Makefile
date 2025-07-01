@@ -1,4 +1,4 @@
-.PHONY: ai-rules check-ffmpeg ci ci-full coverage-view debug debug-ignore-existing format init install-dev lint list-sql list-tables mypy requirements requirements-update reset run test test-all test-integration validate
+.PHONY: ai-rules check-ffmpeg ci ci-full coverage-view debug debug-ignore-existing format init install-dev lint list-sql list-tables mypy requirements requirements-update reset run test test-all test-integration validate logo
 
 clean:
 	rm -rf tests/data/transcripts
@@ -95,3 +95,19 @@ ai-rules:
 	@echo "Generating AI assistant rule files from master AI-rules.md..."
 	@python scripts/generate_ai_rules.py docs/ai/AI-rules.md
 	@echo "AI rule files generated successfully."
+
+# Graphics
+svg_logo := graphics/logo.svg
+png_logo := graphics/logo.png
+logo:
+	@if [ ! -f "$(svg_logo)" ]; then \
+		echo "SVG logo file not found: $(svg_logo)"; \
+		exit 1; \
+	fi
+	@echo "Converting $(svg_logo) to graphics/temp.png with width 1024 using Inkscape..."
+	inkscape $(svg_logo) --export-type=png --export-width=1024 --export-filename=graphics/temp.png || \
+		inkscape $(svg_logo) --export-type=png --export-height=1024 --export-filename=graphics/temp.png
+	@echo "Padding graphics/temp.png to 1024x1024 using ImageMagick..."
+	convert graphics/temp.png -gravity center -background none -extent 1024x1024 $(png_logo)
+	@rm -f graphics/temp.png
+	@echo "Done: $(png_logo)"

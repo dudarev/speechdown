@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "speechdown"
-version = "0.2.5"
+version = "0.2.6"
 description = "A CLI tool for transcribing audio files in multiple languages."
 authors = [{ name = "Artem Dudarev", email = "dudarev@gmail.com" }]
 requires-python = ">=3.11"
