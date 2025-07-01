@@ -49,9 +49,16 @@ class TranscriptionService:
                 # Try to get existing transcription first
                 existing = self.repository_port.get_best_transcription(audio_file.path)
                 if existing:
-                    transcriptions.append(existing)
-                    logger.debug(f"Using existing transcription for {audio_file.path}")
-                    continue
+                    file_mtime = datetime.fromtimestamp(audio_file.path.stat().st_mtime)
+                    if (
+                        existing.transcription_started_at
+                        and existing.transcription_started_at < file_mtime
+                    ):
+                        self.repository_port.delete_transcriptions(audio_file.path)
+                    else:
+                        transcriptions.append(existing)
+                        logger.debug(f"Using existing transcription for {audio_file.path}")
+                        continue
 
             # If no existing transcription or ignore_existing=True, perform transcription
             best_transcription = None

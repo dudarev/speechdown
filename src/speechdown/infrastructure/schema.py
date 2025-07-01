@@ -13,6 +13,6 @@ CREATE TABLE IF NOT EXISTS transcriptions (
     words_per_second REAL,
     model_name TEXT,
     transcription_time_seconds REAL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    transcription_started_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 """

@@ -3,6 +3,7 @@ import logging
 from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional
+from datetime import datetime
 
 from speechdown.application.ports.transcription_repository_port import TranscriptionRepositoryPort
 from speechdown.domain.entities import CachedTranscription, Transcription
@@ -71,8 +72,8 @@ class SQLiteRepositoryAdapter(TranscriptionRepositoryPort):
                     path, transcribed_text, language_code, confidence,
                     avg_logprob_mean, compression_ratio_mean, no_speech_prob_mean,
                     audio_duration_seconds, word_count, words_per_second,
-                    model_name, transcription_time_seconds
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    model_name, transcription_time_seconds, transcription_started_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     str(transcription.audio_file.path),
@@ -87,6 +88,7 @@ class SQLiteRepositoryAdapter(TranscriptionRepositoryPort):
                     metrics.words_per_second,
                     metrics.model_name,
                     metrics.transcription_time_seconds,
+                    transcription.transcription_started_at,
                 ),
             )
 
@@ -94,6 +96,21 @@ class SQLiteRepositoryAdapter(TranscriptionRepositoryPort):
             logger.debug(f"Saved transcription for {transcription.audio_file.path}")
         except sqlite3.Error as e:
             logger.error(f"Error saving transcription: {e}")
+        finally:
+            if conn:
+                conn.close()
+
+    def delete_transcriptions(self, path: Path) -> None:
+        """Delete all transcriptions for a given audio file."""
+        conn: sqlite3.Connection | None = None
+        try:
+            conn = sqlite3.connect(self.db_path)
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM transcriptions WHERE path = ?", (str(path),))
+            conn.commit()
+            logger.debug(f"Deleted transcriptions for {path}")
+        except sqlite3.Error as e:
+            logger.error(f"Error deleting transcriptions: {e}")
         finally:
             if conn:
                 conn.close()
@@ -149,11 +166,18 @@ class SQLiteRepositoryAdapter(TranscriptionRepositoryPort):
                 timestamp = Timestamp(self._get_file_timestamp(file_path))
                 audio_file = AudioFile(path=file_path, timestamp=timestamp)
 
+                transcription_started_at = (
+                    datetime.fromisoformat(row["transcription_started_at"])
+                    if row["transcription_started_at"]
+                    else None
+                )
+
                 transcription = Transcription(
                     audio_file=audio_file,
                     text=row["transcribed_text"],
                     language=Language(row["language_code"]),
                     metrics=metrics,
+                    transcription_started_at=transcription_started_at,
                 )
 
                 transcriptions.append(transcription)
@@ -215,11 +239,18 @@ class SQLiteRepositoryAdapter(TranscriptionRepositoryPort):
                 timestamp = Timestamp(self._get_file_timestamp(file_path))
                 audio_file = AudioFile(path=file_path, timestamp=timestamp)
 
+                transcription_started_at = (
+                    datetime.fromisoformat(row["transcription_started_at"])
+                    if row["transcription_started_at"]
+                    else None
+                )
+
                 return Transcription(
                     audio_file=audio_file,
                     text=row["transcribed_text"],
                     language=Language(row["language_code"]),
                     metrics=metrics,
+                    transcription_started_at=transcription_started_at,
                 )
 
             return None
