@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Union
+from datetime import datetime
 
 from speechdown.domain.value_objects import Language, Timestamp, TranscriptionMetrics
 
@@ -17,6 +18,7 @@ class Transcription:
     text: str
     language: Language
     metrics: TranscriptionMetrics
+    transcription_started_at: datetime | None = None
 
 
 @dataclass

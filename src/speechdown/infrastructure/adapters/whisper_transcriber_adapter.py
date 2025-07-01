@@ -1,5 +1,6 @@
 from typing import Dict, Any, List
 import statistics
+from datetime import datetime
 
 from speechdown.application.ports.transcriber_port import TranscriberPort
 from speechdown.domain.entities import AudioFile, Transcription
@@ -149,6 +150,7 @@ class WhisperTranscriberAdapter(TranscriberPort):
         import time
 
         start_time = time.monotonic()
+        transcription_started_at = datetime.now()
 
         # Use the provided model to transcribe with the specified language
         result = self.model.transcribe(str(audio_file.path), language=language.code)
@@ -172,6 +174,7 @@ class WhisperTranscriberAdapter(TranscriberPort):
             text=result["text"],
             language=language or Language(result["language"]),
             metrics=metrics,
+            transcription_started_at=transcription_started_at,
         )
 
     def auto_transcribe(self, audio_file: AudioFile) -> Transcription:
@@ -193,6 +196,7 @@ class WhisperTranscriberAdapter(TranscriberPort):
         import time
 
         start_time = time.monotonic()
+        transcription_started_at = datetime.now()
 
         # Use the provided model to detect language and transcribe
         result = self.model.transcribe(str(audio_file.path))
@@ -216,4 +220,5 @@ class WhisperTranscriberAdapter(TranscriberPort):
             text=result["text"],
             language=Language(result["language"]),
             metrics=metrics,
+            transcription_started_at=transcription_started_at,
         )

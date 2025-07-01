@@ -1,9 +1,11 @@
 import pytest
 from unittest.mock import Mock
+from datetime import datetime
 from pathlib import Path
 import statistics
 
 from speechdown.infrastructure.adapters.whisper_transcriber_adapter import WhisperTranscriberAdapter
+import speechdown.infrastructure.adapters.whisper_transcriber_adapter as whisper_transcriber_adapter
 from speechdown.domain.entities import AudioFile, Transcription
 from speechdown.domain.value_objects import Language, Timestamp, TranscriptionMetrics, MetricSource
 
@@ -124,6 +126,34 @@ def test_auto_transcribe(mock_transcription_model, sample_audio_file, sample_tra
     assert transcription.audio_file == sample_audio_file
     assert transcription.text == sample_transcription_result["text"]
     assert transcription.language.code == "en"
+
+
+def test_transcribe_started_at_set_before_model_call(
+    monkeypatch, sample_audio_file, sample_transcription_result
+):
+    events = []
+
+    class DummyDatetime:
+        @classmethod
+        def now(cls):
+            events.append("now")
+            return datetime(2022, 1, 1)
+
+    def transcribe(path, language=None):
+        events.append("transcribe")
+        return sample_transcription_result
+
+    dummy_model = Mock()
+    dummy_model.name = "mock-model"
+    dummy_model.transcribe.side_effect = transcribe
+
+    monkeypatch.setattr(whisper_transcriber_adapter, "datetime", DummyDatetime)
+
+    adapter = WhisperTranscriberAdapter(model=dummy_model)
+    result = adapter.transcribe(sample_audio_file, Language("en"))
+
+    assert events == ["now", "transcribe"]
+    assert result.transcription_started_at == datetime(2022, 1, 1)
 
 
 def test_extract_metrics_empty_segments(mock_transcription_model):

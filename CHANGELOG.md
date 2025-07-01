@@ -7,6 +7,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 See [ADR 013](docs/adrs/current/013_use_changelog.md) for more details on the changelog usage.
 
 
+## [0.2.7] - 2025-07-01
+### Fixed
+- Re-transcribe audio files when they are modified after the initial transcription to avoid partial results being reused
+### Added
+- Record `transcription_started_at` on transcriptions to detect outdated results and improve retry logic
+
 ## [0.2.6] - 2025-07-01
 
 ### Added

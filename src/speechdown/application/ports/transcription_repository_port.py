@@ -12,3 +12,7 @@ class TranscriptionRepositoryPort(Protocol):
 
     def get_best_transcription(self, path: Path) -> Transcription | None:
         pass
+
+    def delete_transcriptions(self, path: Path) -> None:
+        """Delete all transcriptions for the given audio file."""
+        pass

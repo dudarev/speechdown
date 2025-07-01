@@ -17,6 +17,6 @@ SELECT
         THEN ROUND((word_count / transcription_time_seconds) * 60, 1) 
         ELSE 0 
     END as "Words per Minute",
-    datetime(created_at) as "Created"
-FROM transcriptions 
-ORDER BY created_at DESC;
+    datetime(transcription_started_at) as "Created"
+FROM transcriptions
+ORDER BY transcription_started_at DESC;
