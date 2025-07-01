@@ -6,7 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 See [ADR 013](docs/adrs/current/013_use_changelog.md) for more details on the changelog usage.
 
-## [Unreleased]
+
+## [0.2.6] - 2025-07-01
+
+### Added
+
+- Generated PNG file with logo (`graphics/logo.png`)
+- Makefile `logo` target for converting SVG to 1024x1024 PNG using Inkscape and ImageMagick
+- Documentation: Added `graphics/README.md` with logo conversion instructions and `graphics/logo_color_history.md` to track logo color changes
+
+### Changed
+
+- Updated logo color from orange (`#FA6800`) to blue (`#2563EB`) in all logo source files
 
 ## [0.2.5] - 2025-06-13
 

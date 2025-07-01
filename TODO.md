@@ -8,13 +8,12 @@ Align with [roadmap](docs/planning/roadmap.md) for mid-term planning.
 
 - TASK: RESEARCH: rules for GitHub copilot, Jules, Claude Code etc.
 - Research: Audio Timestamp Extraction
-  - From file names
+  - From file names - DONE
   - From file metadata
 - Collect relevant notes about SpeechDown - ongoing - use [ar](docs/notes/ar.md) notes
 
 ## Nearest Future
 
-- Introduce CHANGELOG.md (ADR for it)
 - Output file is updated as transcription occurs
 - [ ] Improve transcription output handling
   - [ ] Get existing output
