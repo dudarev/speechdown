@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.speechdown.watcher</string>
+    
+    <key>ProgramArguments</key>
+    <array>
+        <string>SCRIPT_PATH_PLACEHOLDER</string>
+    </array>
+    
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>SPEECHDOWN_WATCH_DIR</key>
+        <string>WATCH_DIR_PLACEHOLDER</string>
+        <key>SPEECHDOWN_WATCHER_LOG</key>
+        <string>LOG_FILE_PLACEHOLDER</string>
+        <key>SPEECHDOWN_WATCHER_LOCK</key>
+        <string>LOCK_FILE_PLACEHOLDER</string>
+        <key>SPEECHDOWN_WATCHER_VERBOSE</key>
+        <string>false</string>
+        <key>SPEECHDOWN_WITHIN_HOURS</key>
+        <string>48</string>
+        <key>SPEECHDOWN_CMD</key>
+        <string>SPEECHDOWN_CMD_PLACEHOLDER</string>
+        <key>PATH</key>
+        <string>PATH_PLACEHOLDER</string>
+    </dict>
+    
+    <key>RunAtLoad</key>
+    <true/>
+    
+    <key>KeepAlive</key>
+    <true/>
+    
+    <key>StandardOutPath</key>
+    <string>STDOUT_LOG_PLACEHOLDER</string>
+    
+    <key>StandardErrorPath</key>
+    <string>STDERR_LOG_PLACEHOLDER</string>
+    
+    <key>ProcessType</key>
+    <string>Background</string>
+</dict>
+</plist>

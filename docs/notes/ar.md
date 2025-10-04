@@ -1,5 +1,7 @@
 File inspired by [The append-and-review note idea by Andrej Karpathy](https://karpathy.bearblog.dev/the-append-and-review-note/)
 
+- There should be a way to get a version from the command line. 
+
 - Text before h2 level headers should not be affected.
 - Other h2 level headers should not be affected.
 
