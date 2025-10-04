@@ -8,18 +8,17 @@ The automation setup enables continuous transcription of voice recordings in the
 
 ## Prerequisites
 
-### 1. Install SpeechDown via pipx
+### 1. Install SpeechDown via uvx
 
 For stable automation, install SpeechDown from GitHub with a specific frozen version:
 
 ```bash
-# Install or upgrade pipx if not already installed
-brew install pipx
-pipx ensurepath
+# Install or upgrade uv if not already installed
+brew install uv
 
 # Install SpeechDown from a specific version/commit for stability
 # Replace <version> with a specific tag or commit hash (e.g., 0.2.5)
-pipx install git+https://github.com/dudarev/speechdown@<version>
+uvx --from git+https://github.com/dudarev/speechdown@<version> sd
 
 # Verify installation
 sd --help
@@ -32,13 +31,13 @@ sd --help
 For cron jobs to work properly, you need to ensure your shell environment is correctly configured. **Cron runs with a minimal environment**, so explicit PATH and HOME configuration is essential:
 
 ```bash
-# Check your current PATH includes pipx
+# Check your current PATH includes uv tools
 echo $PATH
 
 # Check your home directory
 echo $HOME
 
-# If pipx is not in PATH, add this to your ~/.zshrc or ~/.bash_profile:
+# If uv tools are not in PATH, add this to your ~/.zshrc or ~/.bash_profile:
 export PATH="$HOME/.local/bin:$PATH"
 
 # Reload your shell configuration
@@ -315,11 +314,17 @@ find ~/logs -name "sd_voice_notes.log*" -mtime +30 -delete
    chmod +x ~/bin/sd_voice_notes.sh
    ```
 
-2. **Command not found (sd)**
+2. **Permission denied**
 
-   - Verify pipx installation and PATH configuration
+   ```bash
+   chmod +x ~/bin/sd_voice_notes.sh
+   ```
+
+3. **Command not found (sd)**
+
+   - Verify uv installation and PATH configuration
    - Check that `$HOME/.local/bin` is in PATH
-   - Run `pipx list` to verify SpeechDown is installed
+   - Run `uv tool list` to verify SpeechDown is installed
    - **Cron-specific**: Ensure the script sets PATH explicitly (see script example)
 
 3. **Lock file issues**
@@ -393,4 +398,4 @@ If migrating from an existing voice transcription automation setup:
 - **Better timestamp extraction**: More robust filename parsing
 - **Daily file grouping**: Automatic organization by date
 - **Improved error handling**: Better logging and recovery
-- **Stable versioning**: Pinned installation via pipx
+- **Stable versioning**: Pinned installation via uvx

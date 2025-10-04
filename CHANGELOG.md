@@ -7,6 +7,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 See [ADR 013](docs/adrs/current/013_use_changelog.md) for more details on the changelog usage.
 
 
+## [0.2.8] - 2025-10-04
+
+### Changed
+
+- Update installation documentation from pipx to uvx across all documentation files
+- Add `make install-global` target for convenient global installation using uvx
+
 ## [0.2.7] - 2025-07-01
 ### Fixed
 - Re-transcribe audio files when they are modified after the initial transcription to avoid partial results being reused
@@ -51,7 +58,7 @@ See [ADR 013](docs/adrs/current/013_use_changelog.md) for more details on the ch
 
 ### Fixed
 
-- Add missing `__init__.py` file in `speechdown/presentation/` directory to fix `ModuleNotFoundError` when package is installed via pipx
+- Add missing `__init__.py` file in `speechdown/presentation/` directory to fix `ModuleNotFoundError` when package is installed via pipx or uvx
 
 ## [0.2.1] - 2025-06-12
 

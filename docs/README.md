@@ -32,11 +32,11 @@ This installs all required dependencies including development tools.
 
 ### For Production Use
 
-Install SpeechDown via [pipx](https://pipx.pypa.io/) for stable automation:
+Install SpeechDown via [uvx](https://docs.astral.sh/uv/) for stable automation:
 
 ```bash
 # Install SpeechDown from GitHub
-pipx install git+https://github.com/dudarev/speechdown
+uvx --from git+https://github.com/dudarev/speechdown sd
 
 # Verify installation
 sd --help

@@ -23,6 +23,15 @@ requirements: check-ffmpeg
 	pip install uv
 	uv pip install -e '.[testing]'
 
+install-global:
+	@echo "Installing SpeechDown globally using uvx..."
+	@if ! command -v uv > /dev/null 2>&1; then \
+		echo "uv not found. Installing via pip..."; \
+		pip install uv; \
+	fi
+	uvx --from git+https://github.com/dudarev/speechdown sd --help
+	@echo "SpeechDown installed globally. Run 'sd --help' to verify."
+
 requirements-local:
 	uv pip install -e '.[testing-local]'
 	@echo "Local development environment set up with dependencies"
