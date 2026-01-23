@@ -50,10 +50,12 @@ class TranscriptionService:
                 existing = self.repository_port.get_best_transcription(audio_file.path)
                 if existing:
                     file_mtime = datetime.fromtimestamp(audio_file.path.stat().st_mtime)
+                    logger.debug(f"Checking retranscription for {audio_file.path}: transcription_started_at={existing.transcription_started_at}, file_mtime={file_mtime}")
                     if (
                         existing.transcription_started_at
                         and existing.transcription_started_at < file_mtime
                     ):
+                        logger.info(f"File {audio_file.path} modified after transcription (transcription_started_at: {existing.transcription_started_at}, file_mtime: {file_mtime}). Deleting old transcription and retranscribing.")
                         self.repository_port.delete_transcriptions(audio_file.path)
                     else:
                         transcriptions.append(existing)
