@@ -102,7 +102,7 @@ process_file() {
     log "Transcription started (processing files from last $WITHIN_HOURS hours)..."
     
     # Use tee to capture output to log while still getting exit code
-    if "$SPEECHDOWN_CMD" transcribe --within-hours "$WITHIN_HOURS" 2>&1 | tee -a "$LOG_FILE" > /dev/null; then
+    if "$SPEECHDOWN_CMD" transcribe --within-hours "$WITHIN_HOURS" 2>&1 --debug | tee -a "$LOG_FILE" > /dev/null; then
         log "✓ Transcription completed successfully"
     else
         exit_code=$?
