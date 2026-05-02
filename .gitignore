@@ -19,6 +19,9 @@ build/
 # VS Code
 .vscode/
 
+# Codex
+.codex/
+
 # Environment variables
 .env
 .env.*
